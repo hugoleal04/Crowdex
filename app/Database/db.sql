@@ -185,6 +185,7 @@ CREATE TABLE IF NOT EXISTS `Crowdex`.`User` (
   `PFP` VARCHAR(255) NULL DEFAULT 'uploads/profile_pictures/default.webp',
   `Birthday` DATE NOT NULL,
   `Country_idCountry` INT NOT NULL,
+  `Verified` TINYINT NULL DEFAULT 0,
   `Type` VARCHAR(45) NOT NULL DEFAULT 'User',
   PRIMARY KEY (`idUser`),
   INDEX `fk_User_Country1_idx` (`Country_idCountry` ASC) VISIBLE,

@@ -47,6 +47,7 @@
     <link rel="stylesheet" href="css/layout.css">
 
 </head>
+<?php /** @var array $users */ ?>
 
 <body>
 
@@ -202,6 +203,7 @@
 
         <!-- SEARCH -->
 
+
         <form class="navbar-search"
             method="GET"
             action="?controller=user&action=search">
@@ -329,173 +331,111 @@
 
         id="mainContent">
 
-        <div class="container-fluid ">
-            <!-- UPCOMING CONCERTS -->
-            <div class="section">
+        <div class="search-page">
+
+            <section class="search-section">
 
                 <div class="section-header">
 
-                    <h4>Upcoming Concerts</h4>
+                    <h3>
+                        <i class="bi bi-people-fill"></i>
 
-                    <a href="#">View all</a>
-
-                </div>
-
-                <div class="cards-grid">
-
-                    <div class="dashboard-card concert-card">
-
-                        <div class="card-image"></div>
-
-                        <div class="card-body">
-
-                            <h5>Coldplay</h5>
-
-                            <p>Lisbon • 21 Aug 2026</p>
-
-                        </div>
-
-                    </div>
-
-                    <div class="dashboard-card concert-card">
-
-                        <div class="card-image"></div>
-
-                        <div class="card-body">
-
-                            <h5>Bring Me The Horizon</h5>
-
-                            <p>Madrid • 4 Sep 2026</p>
-
-                        </div>
-
-                    </div>
-
-                    <div class="dashboard-card concert-card">
-
-                        <div class="card-image"></div>
-
-                        <div class="card-body">
-
-                            <h5>Sleep Token</h5>
-
-                            <p>London • 18 Sep 2026</p>
-
-                        </div>
-
-                    </div>
+                        Users
+                    </h3>
 
                 </div>
 
-            </div>
+                <div class="results-grid">
+                    <?php foreach ($users as $user) { ?>
+                        <div class="result-card">
+                            <img
+                                src="<?= $user["PFP"] ?>"
+                                class="result-avatar"
+                                alt="Profile">
+                            <h6><?= $user["Name"] ?></h6>
+                            <small>@<?= $user["Username"] ?></small>
+                        </div>
+                    <?php } ?>
 
-            <!-- FRIENDS -->
+                </div>
 
-            <div class="section mt-5">
+            </section>
+
+            <section class="search-section">
 
                 <div class="section-header">
 
-                    <h4>Friends Activity</h4>
+                    <h3>
+                        <i class="bi bi-music-note-beamed"></i>
 
-                    <a href="#">See more</a>
-
-                </div>
-
-                <div class="activity-card">
-
-                    <div class="activity-avatar">
-
-                        H
-
-                    </div>
-
-                    <div>
-
-                        <strong>Hugo</strong>
-
-                        reviewed
-
-                        <strong>Coldplay</strong>
-
-                        ★★★★★
-
-                    </div>
+                        Artists
+                    </h3>
 
                 </div>
 
-                <div class="activity-card">
+                <div class="results-grid">
 
-                    <div class="activity-avatar">
+                    <div class="result-card">
 
-                        J
+                        <img
+                            src="media/default-band.png"
+                            class="result-avatar">
 
-                    </div>
+                        <h6>
 
-                    <div>
+                            Bring Me The Horizon
 
-                        <strong>João</strong>
+                        </h6>
 
-                        is attending
+                        <small>
 
-                        <strong>NOS Alive</strong>
+                            Metalcore
+
+                        </small>
 
                     </div>
 
                 </div>
 
-            </div>
+            </section>
 
-            <!-- TRENDING -->
-
-            <div class="section mt-5">
+            <section class="search-section">
 
                 <div class="section-header">
 
-                    <h4>Trending Artists</h4>
+                    <h3>
+                        <i class="bi bi-ticket-perforated-fill"></i>
+
+                        Events
+                    </h3>
 
                 </div>
 
-                <div class="artists">
+                <div class="results-grid">
 
-                    <span class="artist-pill">
+                    <div class="result-card">
 
-                        Coldplay
+                        <img
+                            src="media/default-event.png"
+                            class="result-avatar">
 
-                    </span>
+                        <h6>
 
-                    <span class="artist-pill">
+                            NOS Alive 2027
 
-                        Sleep Token
+                        </h6>
 
-                    </span>
+                        <small>
 
-                    <span class="artist-pill">
+                            11 Jul • Lisbon
 
-                        Linkin Park
+                        </small>
 
-                    </span>
-
-                    <span class="artist-pill">
-
-                        BMTH
-
-                    </span>
-
-                    <span class="artist-pill">
-
-                        Ghost
-
-                    </span>
-
-                    <span class="artist-pill">
-
-                        Architects
-
-                    </span>
+                    </div>
 
                 </div>
 
-            </div>
+            </section>
 
         </div>
 

@@ -80,6 +80,22 @@ class User{
 
         return $stmt->execute([$token, $idUser]);
     }
+    public function getUserBySimilarName(string $similarName): array {
+        $stmt = $this->pdo->prepare("
+            SELECT 
+                idUser,
+                Username,
+                Name,
+                PFP
+            FROM User
+            WHERE Username LIKE :name
+                or Name LIKE :name
+            LIMIT 10
+        ");
+        $stmt->execute(["name" => "%{$similarName}%"]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function findByRememberToken(string $token)
     {
         $stmt = $this->pdo->prepare("

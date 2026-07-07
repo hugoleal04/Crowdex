@@ -36,6 +36,12 @@ class UserController
         header("Location: ?controller=user&action=login");
         exit;
     }
+    public function getUserBySimilarName()
+    {
+        $name = trim($_GET["name"] ?? "");
+        $users = $this->userModel->getUserBySimilarName($name);
+    }
+
     public function loginConf()
     {
         $remember = isset($_POST["remember"]);
@@ -127,5 +133,18 @@ class UserController
         }
 
         require __DIR__ . "/../Views/User/mainmenu.php";
+    }
+    public function search()
+    {
+        if (!isset($_SESSION["user_id"])) {
+            header("Location: ?controller=user&action=login");
+            exit;
+        }
+
+        $query = trim($_GET["query"] ?? "");
+
+        $users = $this->userModel->getUserBySimilarName($query);
+
+        require __DIR__ . "/../Views/User/search.php";
     }
 }

@@ -1,0 +1,46 @@
+/* FONT */
+
+body{
+    font-family:"Space Grotesk",sans-serif;
+}
+
+/* PALETA */
+
+:root{
+
+    --primary:#FFBF00;
+    --primary-hover:#E6AC00;
+
+    --secondary:#447332;
+
+    --dark:#233D1F;
+
+    --light:#FFF4A3;
+
+    --white:#FFFFFF;
+
+}
+
+
+
+/* TÍTULOS */
+
+h1,h2,h3,h4{
+
+    font-weight:700;
+
+    color:var(--dark);
+
+}
+
+.auth-page{
+
+    background:
+    linear-gradient(
+        135deg,
+        var(--secondary) 0%,
+        var(--light) 60%,
+        var(--primary) 100%
+    );
+
+}

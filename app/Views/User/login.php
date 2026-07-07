@@ -19,6 +19,16 @@
     <div class="container vh-100 d-flex justify-content-center align-items-center">
         <div class="col-md-6 col-lg-5">
             <div class="card shadow p-4">
+                <?php if (isset($_GET['error'])): ?>
+                    <div class="alert alert-danger">
+                        Invalid email or password.
+                    </div>
+                <?php endif; ?>
+                <?php if (isset($_GET['register'])): ?>
+                    <div class="alert alert-success">
+                        Account created successfully.
+                    </div>
+                <?php endif; ?>
                 <form method="POST" action="?controller=user&action=loginConf">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email address</label>
@@ -48,6 +58,13 @@
                     <button type="submit" class="btn btn-crowdex w-100">
                         Log in
                     </button>
+                    <a
+                        href="?controller=user&action=register"
+                        class="btn btn-outline-crowdex w-100">
+
+                        Don't have an account? Create one
+
+                    </a>
                 </form>
             </div>
         </div>

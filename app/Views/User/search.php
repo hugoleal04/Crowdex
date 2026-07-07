@@ -48,6 +48,9 @@
 
 </head>
 <?php /** @var array $users */ ?>
+<?php /** @var array $bands */ ?>
+<?php /** @var array $events */ ?>
+
 
 <body>
 
@@ -374,27 +377,27 @@
                 </div>
 
                 <div class="results-grid">
+                    <?php foreach ($bands as $band) { ?>
+                        <div class="result-card">
 
-                    <div class="result-card">
+                            <img
+                                src="<?= $band["ProfileImage"] ?>"
+                                class="result-avatar">
 
-                        <img
-                            src="media/default-band.png"
-                            class="result-avatar">
+                            <h6><?= $band["Name"] ?></h6>
 
-                        <h6>
+                            <small>
 
-                            Bring Me The Horizon
+                                <?php foreach ($band["Genres"] as $genre): ?>
 
-                        </h6>
+                                    <?= htmlspecialchars($genre["Name"]) ?>
 
-                        <small>
+                                <?php endforeach; ?>
 
-                            Metalcore
+                            </small>
 
-                        </small>
-
-                    </div>
-
+                        </div>
+                    <?php } ?>
                 </div>
 
             </section>
@@ -412,27 +415,55 @@
                 </div>
 
                 <div class="results-grid">
+                    <?php foreach ($events as $event) { ?>
 
-                    <div class="result-card">
+                        <div class="event-card">
 
-                        <img
-                            src="media/default-event.png"
-                            class="result-avatar">
+                            <h5 class="event-title">
 
-                        <h6>
+                                <?= htmlspecialchars($event["Title"]) ?>
 
-                            NOS Alive 2027
+                            </h5>
 
-                        </h6>
+                            <div class="event-info">
 
-                        <small>
+                                <span>
 
-                            11 Jul • Lisbon
+                                    <i class="bi bi-calendar-event"></i>
 
-                        </small>
+                                    <?= date("d M Y", strtotime($event["StartDateTime"])) ?>
 
-                    </div>
+                                </span>
 
+                                <span>
+
+                                    <i class="bi bi-clock"></i>
+
+                                    <?= date("H:i", strtotime($event["StartDateTime"])) ?>
+
+                                </span>
+
+                                <span>
+
+                                    <i class="bi bi-geo-alt-fill"></i>
+
+                                    <?= htmlspecialchars($event["City"]) ?>
+
+                                </span>
+
+                            </div>
+
+                            <a href="#" class="event-link">
+
+                                View event
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </a>
+
+                        </div>
+
+                    <?php } ?>
                 </div>
 
             </section>

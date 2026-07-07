@@ -6,16 +6,25 @@ use App\Services\MailService;
 use PDO;
 use App\Models\User;
 use App\Models\Country;
+use App\Models\Band;
+use App\Models\Event;
+
+
 
 class UserController
 {
     private User $userModel;
     private Country $countryModel;
+    private Band $bandModel;
+    private Event $eventModel;
+
 
     public function __construct(PDO $pdo)
     {
         $this->userModel = new User($pdo);
         $this->countryModel = new Country($pdo);
+        $this->bandModel = new Band($pdo);
+        $this->eventModel = new Event($pdo);
     }
     public function logout()
     {
@@ -79,10 +88,12 @@ class UserController
                 header("Location: ?controller=user&action=menu");
                 exit;
             } else {
-                die("Email or password dont exist");
+                header("Location: ?controller=user&action=login&error=1");
+                exit;
             }
         } else {
-            die("Email or password dont exist");
+            header("Location: ?controller=user&action=login&error=1");
+            exit;
         }
     }
 
@@ -111,7 +122,7 @@ class UserController
             $countryId
         );
 
-        header("Location: ?controller=user&action=login");
+        header("Location: ?controller=user&action=login&register=succesful");
         exit;
     }
 
@@ -144,6 +155,12 @@ class UserController
         $query = trim($_GET["query"] ?? "");
 
         $users = $this->userModel->getUserBySimilarName($query);
+        $bands = $this->bandModel->getBandsBySimilarName($query);
+        $events = $this->eventModel->getEventsBySimilarName($query);
+
+        foreach ($bands as &$band) {
+            $band["Genres"] = $this->bandModel->getGenres($band["idBand"]);
+        }
 
         require __DIR__ . "/../Views/User/search.php";
     }

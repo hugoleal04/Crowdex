@@ -164,4 +164,12 @@ class UserController
 
         require __DIR__ . "/../Views/User/search.php";
     }
+    public function settings()
+    {
+        if (!isset($_SESSION["user_id"])) {
+            header("Location: ?controller=user&action=login");
+            exit;
+        }
+        require __DIR__ . "/../Views/User/settings.php";
+    }
 }

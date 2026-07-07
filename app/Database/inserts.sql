@@ -1500,3 +1500,101 @@ VALUES
 (14,33,'Main Stage','2027-03-12 20:00:00','2027-03-12 22:45:00'),
 (18,34,'Main Stage','2027-09-17 20:00:00','2027-09-17 23:15:00'),
 (19,35,'Main Stage','2027-10-30 20:00:00','2027-10-30 23:10:00');
+
+-- ==========================
+-- USERS
+-- ==========================
+
+INSERT INTO User
+(
+Name,
+Email,
+Password,
+Birthday,
+Country_idCountry,
+Verified,
+Type,
+Username
+)
+VALUES
+
+('João Silva','joao.silva@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2001-03-14',1,1,'User','joaosilva'),
+
+('Maria Costa','maria.costa@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1999-08-22',1,1,'User','mariacosta'),
+
+('Pedro Fernandes','pedro.fernandes@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1998-01-11',1,1,'User','pedrof'),
+
+('Ana Martins','ana.martins@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2002-05-30',1,1,'User','anamartins'),
+
+('Lucas Pereira','lucas.pereira@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2000-11-18',1,1,'User','lucasp'),
+
+('Tiago Rocha','tiago.rocha@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1997-07-06',1,1,'User','tiagor'),
+
+('Sofia Almeida','sofia.almeida@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2003-02-17',1,1,'User','sofiaalmeida'),
+
+('Miguel Sousa','miguel.sousa@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1996-09-04',1,1,'User','miguels'),
+
+('Inês Ferreira','ines.ferreira@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2004-06-25',1,1,'User','inesf'),
+
+('Carlos Mendes','carlos.mendes@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1995-10-10',1,1,'User','carlosm'),
+
+('Emily Brown','emily.brown@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2000-04-20',21,1,'User','emilybrown'),
+
+('Oliver Smith','oliver.smith@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1998-12-08',21,1,'User','olivers'),
+
+('Emma Taylor','emma.taylor@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2002-03-02',21,1,'User','emmataylor'),
+
+('James Carter','james.carter@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1997-05-16',21,1,'User','jamescarter'),
+
+('Charlotte Hall','charlotte.hall@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1999-08-13',21,1,'User','charhall'),
+
+('Liam Scott','liam.scott@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2001-09-29',21,1,'User','liamscott'),
+
+('Noah Walker','noah.walker@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2003-01-09',33,1,'User','noahwalker'),
+
+('Mia Cooper','mia.cooper@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2004-07-14',33,1,'User','miacooper'),
+
+('Olivia Green','olivia.green@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1998-11-03',33,1,'User','oliviag'),
+
+('Daniel Wilson','daniel.wilson@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1996-06-06',33,1,'User','danwilson'),
+
+('Alex Johnson','alex.johnson@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2000-02-27',33,1,'User','alexjohnson'),
+
+('Benjamin Lee','benjamin.lee@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1997-04-18',34,1,'User','benlee'),
+
+('Ethan Moore','ethan.moore@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2002-09-11',34,1,'User','ethanmoore'),
+
+('Isabella Young','isabella.young@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2003-12-20',3,1,'User','isabellay'),
+
+('Nathan Martin','nathan.martin@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1995-08-30',3,1,'User','nathanmartin'),
+
+('Julien Bernard','julien.bernard@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1998-01-22',3,1,'User','julienb'),
+
+('Hans Müller','hans.mueller@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1996-03-18',4,1,'User','hansmueller'),
+
+('Luca Rossi','luca.rossi@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2001-05-01',5,1,'User','lucarossi'),
+
+('Yuki Tanaka','yuki.tanaka@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1999-10-27',40,1,'User','yukitanaka'),
+
+('Min-Jun Kim','minjun.kim@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2002-02-12',41,1,'User','minjunkim'),
+('João Costa','joao.costa2@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1999-04-18',1,1,'User','joaocosta'),
+
+('Maria Silva','maria.silva2@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2001-01-30',1,1,'User','mariasilva'),
+
+('Pedro Costa','pedro.costa2@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1998-07-09',1,1,'User','pedrocosta'),
+
+('Ana Costa','ana.costa2@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2000-12-15',1,1,'User','anacosta'),
+
+('Miguel Silva','miguel.silva2@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1997-10-02',1,1,'User','miguelsilva'),
+('Coldplay Fan','coldplayfan@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2000-03-15',1,1,'User','coldplayfan'),
+
+('Sleep Token Addict','sleeptoken@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1999-08-20',1,1,'User','sleepytoken'),
+
+('Metallica Forever','metallica@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1998-06-11',1,1,'User','metalhead99'),
+
+('Ghost Fan','ghostfan@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2001-11-03',1,1,'User','ghostlover'),
+
+('BMTH Fan','bmth@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','2002-02-18',1,1,'User','bmthlover'),
+
+('Muse Lover','muse@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1997-07-01',1,1,'User','muselover');
+

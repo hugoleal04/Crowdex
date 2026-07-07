@@ -188,6 +188,7 @@ CREATE TABLE IF NOT EXISTS `Crowdex`.`User` (
   `Verified` TINYINT NULL DEFAULT 0,
   `Type` VARCHAR(45) NOT NULL DEFAULT 'User',
   `Username` VARCHAR(45) NOT NULL,
+  `RememberToken` VARCHAR(64) NULL,
   PRIMARY KEY (`idUser`),
   INDEX `fk_User_Country1_idx` (`Country_idCountry` ASC) VISIBLE,
   UNIQUE INDEX `Username_UNIQUE` (`Username` ASC) VISIBLE,

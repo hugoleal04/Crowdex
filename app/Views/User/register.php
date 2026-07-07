@@ -10,7 +10,7 @@
 </head>
 <?php /** @var array $countries */ ?>
 
-<body class="bg-light">
+<body class="bg-light" style="background: #447332; background: linear-gradient(90deg, rgba(68, 115, 50, 1) 20%, rgba(255, 191, 0, 1) 80%);">
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -112,7 +112,7 @@
                     <hr>
                     <div class="text-center">
                         Já tens conta?
-                        <a href="?controller=auth&action=login">
+                        <a href="?controller=user&action=login">
                             Iniciar Sessão
                         </a>
                     </div>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>
         Login
@@ -13,6 +14,7 @@
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/layout.css">
 </head>
+
 <body class="auth-page">
     <div class="container vh-100 d-flex justify-content-center align-items-center">
         <div class="col-md-6 col-lg-5">
@@ -36,8 +38,7 @@
                             type="checkbox"
                             class="form-check-input"
                             id="remember"
-                            name="remember"
-                        >
+                            name="remember">
 
                         <label class="form-check-label" for="remember">
                             Remember me
@@ -52,5 +53,6 @@
         </div>
     </div>
 
-    </body>
+</body>
+
 </html>

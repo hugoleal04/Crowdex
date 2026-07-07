@@ -2,33 +2,33 @@
                 CROWDEX THEME
 ========================================== */
 
-:root{
+:root {
 
     /* BRAND */
 
-    --primary:#FFBF00;
+    --primary: #FFBF00;
 
-    --primary-hover:#E8AC00;
+    --primary-hover: #E8AC00;
 
-    --secondary:#447332;
+    --secondary: #447332;
 
-    --dark:#233D1F;
+    --dark: #233D1F;
 
-    --light:#FFF4A3;
+    --light: #FFF4A3;
 
-    --white:#FFFFFF;
+    --white: #FFFFFF;
 
     /* UI */
 
-    --background:#FDF7E8;
+    --background: #FDF7E8;
 
-    --surface:#FFFFFF;
+    --surface: #FFFFFF;
 
-    --border:#ECECEC;
+    --border: #ECECEC;
 
-    --text:#233D1F;
+    --text: #233D1F;
 
-    --text-light:#666666;
+    --text-light: #666666;
 
 }
 
@@ -36,13 +36,13 @@
                 RESET
 ========================================== */
 
-*{
+* {
 
-    margin:0;
+    margin: 0;
 
-    padding:0;
+    padding: 0;
 
-    box-sizing:border-box;
+    box-sizing: border-box;
 
 }
 
@@ -50,15 +50,15 @@
                 BODY
 ========================================== */
 
-body{
+body {
 
-    font-family:"Space Grotesk",sans-serif;
+    font-family: "Space Grotesk", sans-serif;
 
-    background:var(--background);
+    background: var(--background);
 
-    color:var(--text);
+    color: var(--text);
 
-    min-height:100vh;
+    min-height: 100vh;
 
 }
 
@@ -66,21 +66,17 @@ body{
             AUTH PAGES
 ========================================== */
 
-.auth-page{
+.auth-page {
 
     background:
 
-    linear-gradient(
+        linear-gradient(135deg,
 
-        135deg,
+            var(--secondary) 0%,
 
-        var(--secondary) 0%,
+            var(--light) 55%,
 
-        var(--light) 55%,
-
-        var(--primary) 100%
-
-    );
+            var(--primary) 100%);
 
 }
 
@@ -88,49 +84,49 @@ body{
                 TYPOGRAPHY
 ========================================== */
 
-h1{
+h1 {
 
-    font-size:2.2rem;
+    font-size: 2.2rem;
 
-    font-weight:700;
-
-}
-
-h2{
-
-    font-size:1.9rem;
-
-    font-weight:700;
+    font-weight: 700;
 
 }
 
-h3{
+h2 {
 
-    font-size:1.5rem;
+    font-size: 1.9rem;
 
-    font-weight:700;
-
-}
-
-h4{
-
-    font-size:1.2rem;
-
-    font-weight:700;
+    font-weight: 700;
 
 }
 
-h5{
+h3 {
 
-    font-size:1rem;
+    font-size: 1.5rem;
 
-    font-weight:700;
+    font-weight: 700;
 
 }
 
-p{
+h4 {
 
-    color:var(--text-light);
+    font-size: 1.2rem;
+
+    font-weight: 700;
+
+}
+
+h5 {
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+}
+
+p {
+
+    color: var(--text-light);
 
 }
 
@@ -138,17 +134,17 @@ p{
                 LINKS
 ========================================== */
 
-a{
+a {
 
-    color:var(--secondary);
+    color: var(--secondary);
 
-    transition:.2s;
+    transition: .2s;
 
 }
 
-a:hover{
+a:hover {
 
-    color:var(--primary);
+    color: var(--primary);
 
 }
 
@@ -156,13 +152,13 @@ a:hover{
                 HR
 ========================================== */
 
-hr{
+hr {
 
-    border:none;
+    border: none;
 
-    height:1px;
+    height: 1px;
 
-    background:#FFFFFF22;
+    background: #FFFFFF22;
 
 }
 
@@ -170,11 +166,11 @@ hr{
             TEXT SELECTION
 ========================================== */
 
-::selection{
+::selection {
 
-    background:var(--primary);
+    background: var(--primary);
 
-    color:var(--dark);
+    color: var(--dark);
 
 }
 
@@ -185,8 +181,8 @@ hr{
 button,
 input,
 a,
-.card{
+.card {
 
-    transition:.25s;
+    transition: .25s;
 
 }

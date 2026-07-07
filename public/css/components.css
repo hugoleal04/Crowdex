@@ -2,37 +2,37 @@
                 BUTTONS
 ========================================== */
 
-.btn-crowdex{
+.btn-crowdex {
 
-    background:var(--primary);
+    background: var(--primary);
 
-    color:var(--dark);
+    color: var(--dark);
 
-    border:none;
+    border: none;
 
-    border-radius:14px;
+    border-radius: 14px;
 
-    height:48px;
+    height: 48px;
 
-    font-weight:600;
+    font-weight: 600;
 
-    transition:.25s;
-
-}
-
-.btn-crowdex:hover{
-
-    background:var(--primary-hover);
-
-    transform:translateY(-2px);
-
-    box-shadow:0 8px 20px rgba(255,191,0,.35);
+    transition: .25s;
 
 }
 
-.btn-crowdex:active{
+.btn-crowdex:hover {
 
-    transform:translateY(0);
+    background: var(--primary-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 20px rgba(255, 191, 0, .35);
+
+}
+
+.btn-crowdex:active {
+
+    transform: translateY(0);
 
 }
 
@@ -40,49 +40,49 @@
                 CARDS
 ========================================== */
 
-.dashboard-card{
+.dashboard-card {
 
-    background:white;
+    background: white;
 
-    border-radius:22px;
+    border-radius: 22px;
 
-    overflow:hidden;
+    overflow: hidden;
 
-    transition:.25s;
+    transition: .25s;
 
-    cursor:pointer;
+    cursor: pointer;
 
-    box-shadow:0 8px 20px rgba(0,0,0,.06);
-
-}
-
-.dashboard-card:hover{
-
-    transform:translateY(-6px);
-
-    box-shadow:0 20px 35px rgba(0,0,0,.12);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .06);
 
 }
 
-.dashboard-card .card-body{
+.dashboard-card:hover {
 
-    padding:20px;
+    transform: translateY(-6px);
 
-}
-
-.dashboard-card h5{
-
-    margin-bottom:8px;
-
-    font-weight:700;
+    box-shadow: 0 20px 35px rgba(0, 0, 0, .12);
 
 }
 
-.dashboard-card p{
+.dashboard-card .card-body {
 
-    margin:0;
+    padding: 20px;
 
-    color:#666;
+}
+
+.dashboard-card h5 {
+
+    margin-bottom: 8px;
+
+    font-weight: 700;
+
+}
+
+.dashboard-card p {
+
+    margin: 0;
+
+    color: #666;
 
 }
 
@@ -91,28 +91,28 @@
 ========================================== */
 
 .form-control,
-.form-select{
+.form-select {
 
-    border-radius:14px;
+    border-radius: 14px;
 
-    border:2px solid transparent;
+    border: 2px solid transparent;
 
-    background:#F8F8F8;
+    background: #F8F8F8;
 
-    height:48px;
+    height: 48px;
 
-    transition:.2s;
+    transition: .2s;
 
 }
 
 .form-control:focus,
-.form-select:focus{
+.form-select:focus {
 
-    border-color:var(--primary);
+    border-color: var(--primary);
 
-    box-shadow:0 0 0 .25rem rgba(255,191,0,.15);
+    box-shadow: 0 0 0 .25rem rgba(255, 191, 0, .15);
 
-    background:white;
+    background: white;
 
 }
 
@@ -120,11 +120,11 @@
                 LABELS
 ========================================== */
 
-.form-label{
+.form-label {
 
-    font-weight:600;
+    font-weight: 600;
 
-    margin-bottom:8px;
+    margin-bottom: 8px;
 
 }
 
@@ -132,15 +132,15 @@
                 AUTH CARD
 ========================================== */
 
-.card{
+.card {
 
-    border:none;
+    border: none;
 
-    border-radius:26px;
+    border-radius: 26px;
 
-    overflow:hidden;
+    overflow: hidden;
 
-    box-shadow:0 15px 35px rgba(0,0,0,.12);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, .12);
 
 }
 
@@ -148,15 +148,15 @@
                 LOGO
 ========================================== */
 
-.logo{
+.logo {
 
-    width:95px;
+    width: 95px;
 
 }
 
-.logo-navbar{
+.logo-navbar {
 
-    width:42px;
+    width: 42px;
 
 }
 
@@ -164,25 +164,25 @@
             ICON BUTTONS
 ========================================== */
 
-.icon-button{
+.icon-button {
 
-    width:42px;
+    width: 42px;
 
-    height:42px;
+    height: 42px;
 
-    border-radius:50%;
+    border-radius: 50%;
 
-    border:none;
+    border: none;
 
-    background:transparent;
+    background: transparent;
 
-    transition:.2s;
+    transition: .2s;
 
 }
 
-.icon-button:hover{
+.icon-button:hover {
 
-    background:#F3F3F3;
+    background: #F3F3F3;
 
 }
 
@@ -190,19 +190,19 @@
             PROFILE BUTTON
 ========================================== */
 
-.profile-button{
+.profile-button {
 
-    border-radius:50px;
+    border-radius: 50px;
 
-    padding:6px 12px;
+    padding: 6px 12px;
 
-    transition:.2s;
+    transition: .2s;
 
 }
 
-.profile-button:hover{
+.profile-button:hover {
 
-    background:#F5F5F5;
+    background: #F5F5F5;
 
 }
 
@@ -210,23 +210,23 @@
                 LINKS
 ========================================== */
 
-a{
+a {
 
-    text-decoration:none;
-
-}
-
-.section-header a{
-
-    color:var(--secondary);
-
-    font-weight:600;
+    text-decoration: none;
 
 }
 
-.section-header a:hover{
+.section-header a {
 
-    color:var(--primary);
+    color: var(--secondary);
+
+    font-weight: 600;
+
+}
+
+.section-header a:hover {
+
+    color: var(--primary);
 
 }
 
@@ -234,21 +234,21 @@ a{
             ARTIST PILL
 ========================================== */
 
-.artist-pill{
+.artist-pill {
 
-    transition:.2s;
+    transition: .2s;
 
-    cursor:pointer;
+    cursor: pointer;
 
 }
 
-.artist-pill:hover{
+.artist-pill:hover {
 
-    background:var(--primary);
+    background: var(--primary);
 
-    color:var(--dark);
+    color: var(--dark);
 
-    transform:translateY(-2px);
+    transform: translateY(-2px);
 
 }
 
@@ -256,29 +256,29 @@ a{
             DROPDOWN
 ========================================== */
 
-.dropdown-menu{
+.dropdown-menu {
 
-    border:none;
+    border: none;
 
-    border-radius:18px;
+    border-radius: 18px;
 
-    box-shadow:0 15px 35px rgba(0,0,0,.12);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, .12);
 
-    padding:10px;
-
-}
-
-.dropdown-item{
-
-    border-radius:12px;
-
-    padding:10px 14px;
+    padding: 10px;
 
 }
 
-.dropdown-item:hover{
+.dropdown-item {
 
-    background:#F7F7F7;
+    border-radius: 12px;
+
+    padding: 10px 14px;
+
+}
+
+.dropdown-item:hover {
+
+    background: #F7F7F7;
 
 }
 
@@ -286,22 +286,22 @@ a{
                 SCROLLBAR
 ========================================== */
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
 
-    width:10px;
-
-}
-
-::-webkit-scrollbar-track{
-
-    background:#EFEFEF;
+    width: 10px;
 
 }
 
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-track {
 
-    background:var(--primary);
+    background: #EFEFEF;
 
-    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb {
+
+    background: var(--primary);
+
+    border-radius: 20px;
 
 }

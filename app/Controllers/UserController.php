@@ -22,7 +22,9 @@ class UserController
         if($user){
             $passwordHash = $user["Password"];
             if(password_verify($password, $passwordHash)){
-                die("Login successful");
+                header("Location: ?controller=user&action=menu");
+                exit;
+                //die("Login successful");
             } else {
                 die("Email or password dont exist");
             }
@@ -67,6 +69,11 @@ class UserController
     {
         
         require __DIR__ . "/../Views/User/login.php";
+    }
+    public function menu()
+    {
+        
+        require __DIR__ . "/../Views/User/mainmenu.php";
     }
 }
 ?>

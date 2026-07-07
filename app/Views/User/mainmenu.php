@@ -1,186 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php require __DIR__ . '/../Layout/header.php'; ?>
+<?php require __DIR__ . '/../Layout/sidebar.php'; ?>
+<?php require __DIR__ . '/../Layout/navbar.php'; ?>
+<div class="main-content" id="mainContent">
 
-<head>
+    <div class="container-fluid ">
+        <!-- UPCOMING CONCERTS -->
+        <div class="section">
 
-    <meta charset="UTF-8">
+            <div class="section-header">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+                <h4>Upcoming Concerts</h4>
 
-    <title>Crowdex</title>
-</head>
-
-<body>
-    <?php require __DIR__ . '/../Layout/header.php'; ?>
-    <?php require __DIR__ . '/../Layout/sidebar.php'; ?>
-    <?php require __DIR__ . '/../Layout/navbar.php'; ?>
-    <div class="main-content" id="mainContent">
-
-        <div class="container-fluid ">
-            <!-- UPCOMING CONCERTS -->
-            <div class="section">
-
-                <div class="section-header">
-
-                    <h4>Upcoming Concerts</h4>
-
-                    <a href="#">View all</a>
-
-                </div>
-
-                <div class="cards-grid">
-
-                    <div class="dashboard-card concert-card">
-
-                        <div class="card-image"></div>
-
-                        <div class="card-body">
-
-                            <h5>Coldplay</h5>
-
-                            <p>Lisbon • 21 Aug 2026</p>
-
-                        </div>
-
-                    </div>
-
-                    <div class="dashboard-card concert-card">
-
-                        <div class="card-image"></div>
-
-                        <div class="card-body">
-
-                            <h5>Bring Me The Horizon</h5>
-
-                            <p>Madrid • 4 Sep 2026</p>
-
-                        </div>
-
-                    </div>
-
-                    <div class="dashboard-card concert-card">
-
-                        <div class="card-image"></div>
-
-                        <div class="card-body">
-
-                            <h5>Sleep Token</h5>
-
-                            <p>London • 18 Sep 2026</p>
-
-                        </div>
-
-                    </div>
-
-                </div>
+                <a href="#">View all</a>
 
             </div>
 
-            <!-- FRIENDS -->
+            <div class="cards-grid">
 
-            <div class="section mt-5">
+                <div class="dashboard-card concert-card">
 
-                <div class="section-header">
+                    <div class="card-image"></div>
 
-                    <h4>Friends Activity</h4>
+                    <div class="card-body">
 
-                    <a href="#">See more</a>
+                        <h5>Coldplay</h5>
 
-                </div>
-
-                <div class="activity-card">
-
-                    <div class="activity-avatar">
-
-                        H
-
-                    </div>
-
-                    <div>
-
-                        <strong>Hugo</strong>
-
-                        reviewed
-
-                        <strong>Coldplay</strong>
-
-                        ★★★★★
+                        <p>Lisbon • 21 Aug 2026</p>
 
                     </div>
 
                 </div>
 
-                <div class="activity-card">
+                <div class="dashboard-card concert-card">
 
-                    <div class="activity-avatar">
+                    <div class="card-image"></div>
 
-                        J
+                    <div class="card-body">
 
-                    </div>
+                        <h5>Bring Me The Horizon</h5>
 
-                    <div>
-
-                        <strong>João</strong>
-
-                        is attending
-
-                        <strong>NOS Alive</strong>
+                        <p>Madrid • 4 Sep 2026</p>
 
                     </div>
 
                 </div>
 
-            </div>
+                <div class="dashboard-card concert-card">
 
-            <!-- TRENDING -->
+                    <div class="card-image"></div>
 
-            <div class="section mt-5">
+                    <div class="card-body">
 
-                <div class="section-header">
+                        <h5>Sleep Token</h5>
 
-                    <h4>Trending Artists</h4>
+                        <p>London • 18 Sep 2026</p>
 
-                </div>
-
-                <div class="artists">
-
-                    <span class="artist-pill">
-
-                        Coldplay
-
-                    </span>
-
-                    <span class="artist-pill">
-
-                        Sleep Token
-
-                    </span>
-
-                    <span class="artist-pill">
-
-                        Linkin Park
-
-                    </span>
-
-                    <span class="artist-pill">
-
-                        BMTH
-
-                    </span>
-
-                    <span class="artist-pill">
-
-                        Ghost
-
-                    </span>
-
-                    <span class="artist-pill">
-
-                        Architects
-
-                    </span>
+                    </div>
 
                 </div>
 
@@ -188,10 +63,116 @@
 
         </div>
 
+        <!-- FRIENDS -->
+
+        <div class="section mt-5">
+
+            <div class="section-header">
+
+                <h4>Friends Activity</h4>
+
+                <a href="#">See more</a>
+
+            </div>
+
+            <div class="activity-card">
+
+                <div class="activity-avatar">
+
+                    H
+
+                </div>
+
+                <div>
+
+                    <strong>Hugo</strong>
+
+                    reviewed
+
+                    <strong>Coldplay</strong>
+
+                    ★★★★★
+
+                </div>
+
+            </div>
+
+            <div class="activity-card">
+
+                <div class="activity-avatar">
+
+                    J
+
+                </div>
+
+                <div>
+
+                    <strong>João</strong>
+
+                    is attending
+
+                    <strong>NOS Alive</strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- TRENDING -->
+
+        <div class="section mt-5">
+
+            <div class="section-header">
+
+                <h4>Trending Artists</h4>
+
+            </div>
+
+            <div class="artists">
+
+                <span class="artist-pill">
+
+                    Coldplay
+
+                </span>
+
+                <span class="artist-pill">
+
+                    Sleep Token
+
+                </span>
+
+                <span class="artist-pill">
+
+                    Linkin Park
+
+                </span>
+
+                <span class="artist-pill">
+
+                    BMTH
+
+                </span>
+
+                <span class="artist-pill">
+
+                    Ghost
+
+                </span>
+
+                <span class="artist-pill">
+
+                    Architects
+
+                </span>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <?php require __DIR__.'/../Layout/scripts.php'; ?>
+</div>
 
-</body>
-
-</html>
+<?php require __DIR__ . '/../Layout/scripts.php'; ?>

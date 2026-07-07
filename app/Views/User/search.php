@@ -1,178 +1,159 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
 
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-    <title>Crowdex</title>
-
-</head>
-<?php /** @var array $users */ ?>
+/** @var array $users */ ?>
 <?php /** @var array $bands */ ?>
 <?php /** @var array $events */ ?>
 
+<?php require __DIR__ . '/../Layout/header.php'; ?>
 
-<body>
+<?php require __DIR__ . '/../Layout/sidebar.php'; ?>
 
-    <?php require __DIR__ . '/../Layout/header.php'; ?>
+<?php require __DIR__ . '/../Layout/navbar.php'; ?>
 
-    <?php require __DIR__ . '/../Layout/sidebar.php'; ?>
+<!-- DASHBOARD -->
 
-    <?php require __DIR__ . '/../Layout/navbar.php'; ?>
+<div
 
-    <!-- DASHBOARD -->
+    class="main-content"
 
-    <div
+    id="mainContent">
 
-        class="main-content"
+    <div class="search-page">
 
-        id="mainContent">
+        <section class="search-section">
 
-        <div class="search-page">
+            <div class="section-header">
 
-            <section class="search-section">
+                <h3>
+                    <i class="bi bi-people-fill"></i>
 
-                <div class="section-header">
+                    Users
+                </h3>
 
-                    <h3>
-                        <i class="bi bi-people-fill"></i>
+            </div>
 
-                        Users
-                    </h3>
+            <div class="results-grid">
+                <?php foreach ($users as $user) { ?>
+                    <div class="result-card">
+                        <img
+                            src="<?= $user["PFP"] ?>"
+                            class="result-avatar"
+                            alt="Profile">
+                        <h6><?= $user["Name"] ?></h6>
+                        <small>@<?= $user["Username"] ?></small>
+                    </div>
+                <?php } ?>
 
-                </div>
+            </div>
 
-                <div class="results-grid">
-                    <?php foreach ($users as $user) { ?>
-                        <div class="result-card">
-                            <img
-                                src="<?= $user["PFP"] ?>"
-                                class="result-avatar"
-                                alt="Profile">
-                            <h6><?= $user["Name"] ?></h6>
-                            <small>@<?= $user["Username"] ?></small>
-                        </div>
-                    <?php } ?>
+        </section>
 
-                </div>
+        <section class="search-section">
 
-            </section>
+            <div class="section-header">
 
-            <section class="search-section">
+                <h3>
+                    <i class="bi bi-music-note-beamed"></i>
 
-                <div class="section-header">
+                    Artists
+                </h3>
 
-                    <h3>
-                        <i class="bi bi-music-note-beamed"></i>
+            </div>
 
-                        Artists
-                    </h3>
+            <div class="results-grid">
+                <?php foreach ($bands as $band) { ?>
+                    <div class="result-card">
 
-                </div>
+                        <img
+                            src="<?= $band["ProfileImage"] ?>"
+                            class="result-avatar">
 
-                <div class="results-grid">
-                    <?php foreach ($bands as $band) { ?>
-                        <div class="result-card">
+                        <h6><?= $band["Name"] ?></h6>
 
-                            <img
-                                src="<?= $band["ProfileImage"] ?>"
-                                class="result-avatar">
+                        <small>
 
-                            <h6><?= $band["Name"] ?></h6>
+                            <?php foreach ($band["Genres"] as $genre): ?>
 
-                            <small>
+                                <?= htmlspecialchars($genre["Name"]) ?>
 
-                                <?php foreach ($band["Genres"] as $genre): ?>
+                            <?php endforeach; ?>
 
-                                    <?= htmlspecialchars($genre["Name"]) ?>
+                        </small>
 
-                                <?php endforeach; ?>
+                    </div>
+                <?php } ?>
+            </div>
 
-                            </small>
+        </section>
 
-                        </div>
-                    <?php } ?>
-                </div>
+        <section class="search-section">
 
-            </section>
+            <div class="section-header">
 
-            <section class="search-section">
+                <h3>
+                    <i class="bi bi-ticket-perforated-fill"></i>
 
-                <div class="section-header">
+                    Events
+                </h3>
 
-                    <h3>
-                        <i class="bi bi-ticket-perforated-fill"></i>
+            </div>
 
-                        Events
-                    </h3>
+            <div class="results-grid">
+                <?php foreach ($events as $event) { ?>
 
-                </div>
+                    <div class="event-card">
 
-                <div class="results-grid">
-                    <?php foreach ($events as $event) { ?>
+                        <h5 class="event-title">
 
-                        <div class="event-card">
+                            <?= htmlspecialchars($event["Title"]) ?>
 
-                            <h5 class="event-title">
+                        </h5>
 
-                                <?= htmlspecialchars($event["Title"]) ?>
+                        <div class="event-info">
 
-                            </h5>
+                            <span>
 
-                            <div class="event-info">
+                                <i class="bi bi-calendar-event"></i>
 
-                                <span>
+                                <?= date("d M Y", strtotime($event["StartDateTime"])) ?>
 
-                                    <i class="bi bi-calendar-event"></i>
+                            </span>
 
-                                    <?= date("d M Y", strtotime($event["StartDateTime"])) ?>
+                            <span>
 
-                                </span>
+                                <i class="bi bi-clock"></i>
 
-                                <span>
+                                <?= date("H:i", strtotime($event["StartDateTime"])) ?>
 
-                                    <i class="bi bi-clock"></i>
+                            </span>
 
-                                    <?= date("H:i", strtotime($event["StartDateTime"])) ?>
+                            <span>
 
-                                </span>
+                                <i class="bi bi-geo-alt-fill"></i>
 
-                                <span>
+                                <?= htmlspecialchars($event["City"]) ?>
 
-                                    <i class="bi bi-geo-alt-fill"></i>
-
-                                    <?= htmlspecialchars($event["City"]) ?>
-
-                                </span>
-
-                            </div>
-
-                            <a href="#" class="event-link">
-
-                                View event
-
-                                <i class="bi bi-arrow-right"></i>
-
-                            </a>
+                            </span>
 
                         </div>
 
-                    <?php } ?>
-                </div>
+                        <a href="#" class="event-link">
 
-            </section>
+                            View event
 
-        </div>
+                            <i class="bi bi-arrow-right"></i>
+
+                        </a>
+
+                    </div>
+
+                <?php } ?>
+            </div>
+
+        </section>
 
     </div>
 
-    <?php require __DIR__ . '/../Layout/scripts.php'; ?>
+</div>
 
-</body>
-
-</html>
+<?php require __DIR__ . '/../Layout/scripts.php'; ?>

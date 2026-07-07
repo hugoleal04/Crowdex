@@ -117,7 +117,7 @@
 
                     <a
                         class="dropdown-item"
-                        href="#">
+                        href="?controller=user&action=settings">
 
                         <i class="bi bi-gear"></i>
 

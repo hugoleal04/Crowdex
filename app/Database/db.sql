@@ -187,8 +187,11 @@ CREATE TABLE IF NOT EXISTS `Crowdex`.`User` (
   `Country_idCountry` INT NOT NULL,
   `Verified` TINYINT NULL DEFAULT 0,
   `Type` VARCHAR(45) NOT NULL DEFAULT 'User',
+  `Username` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idUser`),
   INDEX `fk_User_Country1_idx` (`Country_idCountry` ASC) VISIBLE,
+  UNIQUE INDEX `Username_UNIQUE` (`Username` ASC) VISIBLE,
+  UNIQUE INDEX `Email_UNIQUE` (`Email` ASC) VISIBLE,
   CONSTRAINT `fk_User_Country1`
     FOREIGN KEY (`Country_idCountry`)
     REFERENCES `Crowdex`.`Country` (`idCountry`)

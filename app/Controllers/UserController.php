@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Services\MailService;
 use PDO;
 use App\Models\User;
 use App\Models\Country;
+
 class UserController
 {
     private User $userModel;
@@ -34,18 +36,22 @@ class UserController
         header("Location: ?controller=user&action=login");
         exit;
     }
-    public function loginConf(){
+    public function loginConf()
+    {
         $remember = isset($_POST["remember"]);
         $email = trim($_POST["email"]);
         $password = trim($_POST["password"]);
         $user = $this->userModel->findByEmail($email);
-        if($user){
+        if ($user) {
             $passwordHash = $user["Password"];
-            if(password_verify($password, $passwordHash)){
+            if (password_verify($password, $passwordHash)) {
                 $_SESSION["user_id"] = $user["idUser"];
                 $_SESSION["username"] = $user["Username"];
+                $_SESSION["name"] = $user["Name"];
+                $_SESSION["email"] = $user["Email"];
+                $_SESSION["pfp"] = $user["PFP"];
 
-                if($remember){
+                if ($remember) {
                     $token = bin2hex(random_bytes(32));
 
                     $this->userModel->saveRememberToken(
@@ -69,7 +75,7 @@ class UserController
             } else {
                 die("Email or password dont exist");
             }
-        }else {
+        } else {
             die("Email or password dont exist");
         }
     }
@@ -95,7 +101,7 @@ class UserController
             $email,
             $password,
             $birthday,
-            $username,    
+            $username,
             $countryId
         );
 
@@ -110,12 +116,12 @@ class UserController
     }
     public function login()
     {
-        
+
         require __DIR__ . "/../Views/User/login.php";
     }
     public function menu()
     {
-        if(!isset($_SESSION["user_id"])){
+        if (!isset($_SESSION["user_id"])) {
             header("Location: ?controller=user&action=login");
             exit;
         }
@@ -123,4 +129,3 @@ class UserController
         require __DIR__ . "/../Views/User/mainmenu.php";
     }
 }
-?>

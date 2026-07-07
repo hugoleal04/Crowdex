@@ -246,27 +246,18 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Crowdex`.`FriendRequest`
+-- Table `Crowdex`.`Follow`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Crowdex`.`FriendRequest` (
-  `idFriendRequest` INT NOT NULL AUTO_INCREMENT,
-  `Approved` TINYINT NULL DEFAULT 0,
-  `Sender_idUser` INT NOT NULL,
-  `Receiver_idUser` INT NOT NULL,
-  PRIMARY KEY (`idFriendRequest`),
-  INDEX `fk_FriendRequest_User1_idx` (`Sender_idUser` ASC) VISIBLE,
-  INDEX `fk_FriendRequest_User2_idx` (`Receiver_idUser` ASC) VISIBLE,
-  CONSTRAINT `fk_FriendRequest_User1`
-    FOREIGN KEY (`Sender_idUser`)
-    REFERENCES `Crowdex`.`User` (`idUser`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_FriendRequest_User2`
-    FOREIGN KEY (`Receiver_idUser`)
-    REFERENCES `Crowdex`.`User` (`idUser`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE TABLE Follow (
+    idFollower INT NOT NULL,
+    idFollowing INT NOT NULL,
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (idFollower, idFollowing),
+
+    FOREIGN KEY (idFollower) REFERENCES User(idUser),
+    FOREIGN KEY (idFollowing) REFERENCES User(idUser)
+);
 
 
 -- -----------------------------------------------------

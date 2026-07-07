@@ -17,18 +17,32 @@
             <div class="card shadow">
                 <div class="card-body p-4">
                     <h2 class="text-center mb-4">
-                        Criar Conta
+                        Begin the adventure!
                     </h2>
                     <form method="POST" action="?controller=user&action=createUser">
                         <div class="mb-3">
                             <label class="form-label">
-                                Nome
+                                Name
                             </label>
                             <input
                                 type="text"
                                 name="name"
                                 class="form-control"
                                 required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Username
+                            </label>
+                            <input
+                                type="text"
+                                name="username"
+                                class="form-control"
+                                required
+                                minlength="3"
+                                maxlength="20"
+                                pattern="[A-Za-z0-9_]+"
+                                title="The username can only contain letters, numbers and underscores (_).">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">
@@ -52,7 +66,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">
-                                Confirmar Password
+                                Confirm password
                             </label>
                             <input
                                 type="password"
@@ -62,7 +76,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">
-                                Data de Nascimento
+                                Birthday
                             </label>
                             <input
                                 type="date"
@@ -72,7 +86,7 @@
                         </div>
                         <div class="mb-4">
                             <label class="form-label">
-                                País
+                                Country
                             </label>
                             <?php
                                 function countryFlag(string $iso2): string
@@ -89,7 +103,7 @@
                                 required>
 
                                 <option value="">
-                                    Selecionar país
+                                    Select your country
                                 </option>
 
                                 <?php foreach ($countries as $country): ?>
@@ -106,14 +120,14 @@
                         <button
                             type="submit"
                             class="btn btn-success w-100">
-                            Criar Conta
+                            Create your account
                         </button>
                     </form>
                     <hr>
                     <div class="text-center">
-                        Já tens conta?
+                        Already have an account?
                         <a href="?controller=user&action=login">
-                            Iniciar Sessão
+                            Log in
                         </a>
                     </div>
                 </div>

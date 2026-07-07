@@ -36,6 +36,7 @@ class User{
     string $email,
     string $password,
     string $birthday,
+    string $username,
     int $countryId
     ): bool
     {
@@ -46,7 +47,8 @@ class User{
                 Email,
                 Password,
                 Birthday,
-                Country_idCountry
+                Country_idCountry,
+                Username
             )
             VALUES
             (
@@ -54,7 +56,8 @@ class User{
                 :email,
                 :password,
                 :birthday,
-                :country
+                :country,
+                :username
             )
         ");
 
@@ -63,8 +66,31 @@ class User{
             ":email" => $email,
             ":password" => $password,
             ":birthday" => $birthday,
-            ":country" => $countryId
+            ":country" => $countryId,
+            ":username" => $username
         ]);
+    }
+    public function saveRememberToken(int $idUser, ?string $token)
+    {
+        $stmt = $this->pdo->prepare("
+            UPDATE User
+            SET RememberToken = ?
+            WHERE idUser = ?
+        ");
+
+        return $stmt->execute([$token, $idUser]);
+    }
+    public function findByRememberToken(string $token)
+    {
+        $stmt = $this->pdo->prepare("
+            SELECT *
+            FROM User
+            WHERE RememberToken = ?
+        ");
+
+        $stmt->execute([$token]);
+
+        return $stmt->fetch();
     }
 }
 ?> 

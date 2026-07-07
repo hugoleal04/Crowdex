@@ -44,8 +44,8 @@
                         </label>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100">
-                        Submit
+                    <button type="submit" class="btn btn-crowdex w-100">
+                        Log in
                     </button>
                 </form>
             </div>

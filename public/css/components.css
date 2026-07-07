@@ -1,4 +1,6 @@
-/* BOTÃO */
+/* ==========================================
+                BUTTONS
+========================================== */
 
 .btn-crowdex{
 
@@ -8,9 +10,13 @@
 
     border:none;
 
+    border-radius:14px;
+
+    height:48px;
+
     font-weight:600;
 
-    border-radius:14px;
+    transition:.25s;
 
 }
 
@@ -18,53 +24,284 @@
 
     background:var(--primary-hover);
 
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 20px rgba(255,191,0,.35);
+
 }
 
-/* CARD */
+.btn-crowdex:active{
+
+    transform:translateY(0);
+
+}
+
+/* ==========================================
+                CARDS
+========================================== */
+
+.dashboard-card{
+
+    background:white;
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    transition:.25s;
+
+    cursor:pointer;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.06);
+
+}
+
+.dashboard-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 20px 35px rgba(0,0,0,.12);
+
+}
+
+.dashboard-card .card-body{
+
+    padding:20px;
+
+}
+
+.dashboard-card h5{
+
+    margin-bottom:8px;
+
+    font-weight:700;
+
+}
+
+.dashboard-card p{
+
+    margin:0;
+
+    color:#666;
+
+}
+
+/* ==========================================
+                INPUTS
+========================================== */
+
+.form-control,
+.form-select{
+
+    border-radius:14px;
+
+    border:2px solid transparent;
+
+    background:#F8F8F8;
+
+    height:48px;
+
+    transition:.2s;
+
+}
+
+.form-control:focus,
+.form-select:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 .25rem rgba(255,191,0,.15);
+
+    background:white;
+
+}
+
+/* ==========================================
+                LABELS
+========================================== */
+
+.form-label{
+
+    font-weight:600;
+
+    margin-bottom:8px;
+
+}
+
+/* ==========================================
+                AUTH CARD
+========================================== */
 
 .card{
 
     border:none;
 
-    border-radius:24px;
+    border-radius:26px;
 
-    box-shadow:0 20px 40px rgba(0,0,0,.12);
+    overflow:hidden;
 
-}
-
-/* INPUTS */
-
-.form-control,
-.form-select{
-
-    border-radius:12px;
-
-    height:48px;
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
 
 }
 
-/* LOGO */
+/* ==========================================
+                LOGO
+========================================== */
 
 .logo{
 
-    width:90px;
+    width:95px;
 
 }
 
-/* LINKS */
+.logo-navbar{
+
+    width:42px;
+
+}
+
+/* ==========================================
+            ICON BUTTONS
+========================================== */
+
+.icon-button{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    border:none;
+
+    background:transparent;
+
+    transition:.2s;
+
+}
+
+.icon-button:hover{
+
+    background:#F3F3F3;
+
+}
+
+/* ==========================================
+            PROFILE BUTTON
+========================================== */
+
+.profile-button{
+
+    border-radius:50px;
+
+    padding:6px 12px;
+
+    transition:.2s;
+
+}
+
+.profile-button:hover{
+
+    background:#F5F5F5;
+
+}
+
+/* ==========================================
+                LINKS
+========================================== */
 
 a{
-
-    color:var(--dark);
-
-    font-weight:600;
 
     text-decoration:none;
 
 }
 
-a:hover{
+.section-header a{
 
     color:var(--secondary);
+
+    font-weight:600;
+
+}
+
+.section-header a:hover{
+
+    color:var(--primary);
+
+}
+
+/* ==========================================
+            ARTIST PILL
+========================================== */
+
+.artist-pill{
+
+    transition:.2s;
+
+    cursor:pointer;
+
+}
+
+.artist-pill:hover{
+
+    background:var(--primary);
+
+    color:var(--dark);
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================================
+            DROPDOWN
+========================================== */
+
+.dropdown-menu{
+
+    border:none;
+
+    border-radius:18px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
+
+    padding:10px;
+
+}
+
+.dropdown-item{
+
+    border-radius:12px;
+
+    padding:10px 14px;
+
+}
+
+.dropdown-item:hover{
+
+    background:#F7F7F7;
+
+}
+
+/* ==========================================
+                SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#EFEFEF;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:var(--primary);
+
+    border-radius:20px;
 
 }

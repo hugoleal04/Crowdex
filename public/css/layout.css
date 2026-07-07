@@ -1,73 +1,468 @@
-            .sidebar {
-                height: 100vh;
-                width: 250px;
-                position: fixed;
-                top: 0;
-                left: -250px;
-                background-color: #233D1F;
-                padding-top: 60px;
-                transition: left 0.3s ease;
-                z-index: 1050;
-                box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-            }
+/* ===========================
+            NAVBAR
+=========================== */
 
-            .sidebar.active {
-                left: 0;
-            }
+.navbar{
 
-            .sidebar ul {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
+    position:sticky;
+    top:0;
 
-            .sidebar ul li {
-                padding: 12px 20px;
-                /*border-bottom: 1px solid #dee2e6;*/
-            }
+    z-index:1000;
 
-            .sidebar ul li a {
-                color: #FFFF;
-                text-decoration: none;
-                display: block;
-            }
+    height:75px;
 
-            .sidebar ul li:hover {
-                background-color: #3A5A32;
-            }
+    background:white;
 
-            .sidebar ul li a:hover {
-                color: #000;
-            }
+    display:flex;
 
-            .sidebar-toggle {
-                background: none;
-                border: none;
-                font-size: 24px;
-                cursor: pointer;
-                padding: 5px 10px;
-                margin-right: 10px;
-            }
+    justify-content:space-between;
 
-            .overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.5);
-                z-index: 1040;
-            }
+    align-items:center;
 
-            .overlay.active {
-                display: block;
-            }
+    padding:0 30px;
 
-            .main-content {
-                transition: margin-left 0.3s ease;
-            }
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
 
-            .main-content.shifted {
-                margin-left: 250px;
-            }
+    transition:.3s;
+
+}
+
+.navbar.shifted{
+
+    margin-left:260px;
+
+}
+
+/* ===========================
+        LEFT
+=========================== */
+
+.navbar-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    text-decoration:none;
+
+}
+
+.brand span{
+
+    font-size:1.4rem;
+
+    font-weight:700;
+
+    color:var(--dark);
+
+}
+
+/* ===========================
+        SEARCH
+=========================== */
+
+.navbar-search{
+
+    width:420px;
+
+    background:#F7F7F7;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:12px 18px;
+
+    border-radius:40px;
+
+}
+
+.navbar-search input{
+
+    width:100%;
+
+    border:none;
+
+    background:transparent;
+
+    outline:none;
+
+}
+
+.navbar-search i{
+
+    color:#777;
+
+}
+
+/* ===========================
+        RIGHT
+=========================== */
+
+.navbar-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.icon-button{
+
+    border:none;
+
+    background:none;
+
+    font-size:1.2rem;
+
+}
+
+.profile-button{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    background:none;
+
+    border:none;
+
+}
+
+.profile-avatar{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    background:var(--primary);
+
+    color:var(--dark);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-weight:700;
+
+}
+
+/* ===========================
+        SIDEBAR
+=========================== */
+
+.sidebar{
+
+    position:fixed;
+
+    top:0;
+
+    left:-260px;
+
+    width:260px;
+
+    height:100vh;
+
+    background:var(--dark);
+
+    color:white;
+
+    transition:.3s;
+
+    z-index:1100;
+
+    padding:25px;
+
+}
+
+.sidebar.active{
+
+    left:0;
+
+}
+
+.sidebar-header{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+}
+
+.sidebar-header h3{
+
+    color:white;
+
+    margin-top:15px;
+
+}
+
+.logo-sidebar{
+
+    width:90px;
+
+}
+
+.sidebar ul{
+
+    list-style:none;
+
+    padding:0;
+
+}
+
+.sidebar li{
+
+    margin:8px 0;
+
+}
+
+.sidebar a{
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:14px 18px;
+
+    border-radius:12px;
+
+    text-decoration:none;
+
+    transition:.2s;
+
+}
+
+.sidebar a:hover{
+
+    background:rgba(255,255,255,.08);
+
+    color:var(--primary);
+
+}
+
+/* ===========================
+        SIDEBAR BUTTON
+=========================== */
+
+.sidebar-toggle{
+
+    border:none;
+
+    background:none;
+
+    font-size:1.6rem;
+
+}
+
+/* ===========================
+        OVERLAY
+=========================== */
+
+.overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.35);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.3s;
+
+    z-index:1050;
+
+}
+
+.overlay.active{
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+/* ===========================
+        CONTENT
+=========================== */
+
+.main-content{
+
+    padding:35px;
+
+    transition:.3s;
+
+}
+
+.main-content.shifted{
+
+    margin-left:260px;
+
+}
+
+/* ===========================
+        DASHBOARD
+=========================== */
+
+.section{
+
+    margin-top:35px;
+
+}
+
+.section-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+}
+
+/* ===========================
+        GRID
+=========================== */
+
+.cards-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:25px;
+
+}
+
+/* ===========================
+        CONCERT CARD
+=========================== */
+
+.concert-card{
+
+    overflow:hidden;
+
+    border-radius:20px;
+
+}
+
+.card-image{
+
+    height:170px;
+
+    background:
+    linear-gradient(
+        135deg,
+        var(--secondary),
+        var(--primary)
+    );
+
+}
+
+/* ===========================
+        ACTIVITY
+=========================== */
+
+.activity-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    padding:18px;
+
+    margin-bottom:15px;
+
+    border-radius:18px;
+
+    background:white;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.06);
+
+}
+
+.activity-avatar{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:50%;
+
+    background:var(--primary);
+
+    color:var(--dark);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-weight:bold;
+
+}
+
+/* ===========================
+        ARTISTS
+=========================== */
+
+.artists{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+}
+
+.artist-pill{
+
+    padding:10px 18px;
+
+    border-radius:30px;
+
+    background:white;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}

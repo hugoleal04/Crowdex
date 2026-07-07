@@ -125,6 +125,127 @@ class UserController
         header("Location: ?controller=user&action=login&register=succesful");
         exit;
     }
+    public function update()
+    {
+        $id = $_SESSION["user_id"];
+
+        $name = trim($_POST["name"]);
+        $username = trim($_POST["username"]);
+
+        $pfp = null;
+
+        if (!empty($_FILES["pfp"]["name"])) {
+            $pfp = $this->uploadProfilePicture($_FILES["pfp"]);
+        }
+
+        if ($_POST["newPassword"] === $_POST["newPasswordConfirm"]) {
+
+            $this->userModel->updateUser(
+                $id,
+                $name,
+                $username,
+                $pfp
+            );
+
+            if ($pfp !== null) {
+                $_SESSION["pfp"] = $pfp;
+            }
+
+            $_SESSION["name"] = $name;
+            $_SESSION["username"] = $username;
+
+            $_SESSION["success"] = "Profile updated successfully.";
+        } else {
+
+            $_SESSION["danger"] = "Passwords do not match.";
+        }
+
+        header("Location: ?controller=user&action=settings");
+        exit;
+    }
+    private function uploadProfilePicture(array $file): ?string
+    {
+        if ($file["error"] !== UPLOAD_ERR_OK) {
+            return null;
+        }
+
+        $mime = mime_content_type($file["tmp_name"]);
+
+        switch ($mime) {
+
+            case "image/jpeg":
+                $image = imagecreatefromjpeg($file["tmp_name"]);
+                break;
+
+            case "image/png":
+                $image = imagecreatefrompng($file["tmp_name"]);
+                break;
+
+            case "image/webp":
+                $image = imagecreatefromwebp($file["tmp_name"]);
+                break;
+
+            default:
+                return null;
+        }
+
+        if (!$image) {
+            return null;
+        }
+
+        $size = 512;
+
+        $output = imagecreatetruecolor($size, $size);
+
+        imagealphablending($output, false);
+        imagesavealpha($output, true);
+
+        $originalWidth = imagesx($image);
+        $originalHeight = imagesy($image);
+
+        $cropSize = min($originalWidth, $originalHeight);
+
+        $srcX = ($originalWidth - $cropSize) / 2;
+        $srcY = ($originalHeight - $cropSize) / 2;
+
+        imagecopyresampled(
+            $output,
+            $image,
+            0,
+            0,
+            $srcX,
+            $srcY,
+            $size,
+            $size,
+            $cropSize,
+            $cropSize
+        );
+
+        $fileName = bin2hex(random_bytes(16)) . ".webp";
+
+        $relativePath = "uploads/profile_pictures/" . $fileName;
+
+        $absolutePath = __DIR__ . "/../../public/" . $relativePath;
+
+
+
+        imagewebp($output, $absolutePath, 85);
+
+
+        /*         $result = imagewebp($output, $absolutePath, 85);
+
+        var_dump($absolutePath);
+        var_dump($result);
+        var_dump(file_exists($absolutePath));
+
+        die(); */
+
+
+        imagedestroy($image);
+        imagedestroy($output);
+
+        return $relativePath;
+    }
 
     public function register()
     {

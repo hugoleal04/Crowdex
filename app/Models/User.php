@@ -1,14 +1,18 @@
-<?php 
+<?php
+
 namespace App\Models;
+
 use PDO;
 
-class User{
+class User
+{
     private PDO $pdo;
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
     }
-    public function findByEmail(string $email){
+    public function findByEmail(string $email)
+    {
         $stmt = $this->pdo->prepare("
         SELECT *
         FROM User
@@ -32,14 +36,13 @@ class User{
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     public function createUser(
-    string $name,
-    string $email,
-    string $password,
-    string $birthday,
-    string $username,
-    int $countryId
-    ): bool
-    {
+        string $name,
+        string $email,
+        string $password,
+        string $birthday,
+        string $username,
+        int $countryId
+    ): bool {
         $stmt = $this->pdo->prepare("
             INSERT INTO User
             (
@@ -80,7 +83,47 @@ class User{
 
         return $stmt->execute([$token, $idUser]);
     }
-    public function getUserBySimilarName(string $similarName): array {
+    public function updateUser(
+        int $id,
+        string $name,
+        string $username,
+        ?string $pfp
+    ): bool {
+        if ($pfp !== null) {
+
+            $stmt = $this->pdo->prepare("
+            UPDATE User
+            SET
+                Name = ?,
+                Username = ?,
+                PFP = ?
+            WHERE idUser = ?
+        ");
+
+            return $stmt->execute([
+                $name,
+                $username,
+                $pfp,
+                $id
+            ]);
+        }
+
+        $stmt = $this->pdo->prepare("
+        UPDATE User
+        SET
+            Name = ?,
+            Username = ?
+        WHERE idUser = ?
+    ");
+
+        return $stmt->execute([
+            $name,
+            $username,
+            $id
+        ]);
+    }
+    public function getUserBySimilarName(string $similarName): array
+    {
         $stmt = $this->pdo->prepare("
             SELECT 
                 idUser,
@@ -109,4 +152,3 @@ class User{
         return $stmt->fetch();
     }
 }
-?> 

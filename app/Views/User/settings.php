@@ -18,7 +18,7 @@
 
         <form
             method="POST"
-            action="?controller=user&action=updateSettings"
+            action="?controller=user&action=update"
             enctype="multipart/form-data">
 
             <div class="settings-container">
@@ -125,6 +125,7 @@
                                     type="email"
                                     class="form-control"
                                     name="email"
+                                    disabled
                                     value="<?= htmlspecialchars($_SESSION["email"]) ?>">
 
                             </div>
@@ -148,7 +149,7 @@
                                 <input
                                     type="password"
                                     class="form-control"
-                                    name="password"
+                                    name="newPassword"
                                     placeholder="Leave empty to keep current password">
 
                             </div>
@@ -164,7 +165,7 @@
                                 <input
                                     type="password"
                                     class="form-control"
-                                    name="confirmPassword">
+                                    name="newPasswordConfirm">
 
                             </div>
 

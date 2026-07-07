@@ -1,2 +1,5 @@
 /vendor/
 /.env
+public/uploads/profile_pictures/*
+
+!public/uploads/profile_pictures/default.webp

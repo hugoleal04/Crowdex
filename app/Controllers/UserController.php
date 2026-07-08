@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Country;
 use App\Models\Band;
 use App\Models\Event;
+use App\Services\LastFmService;
 
 
 
@@ -127,6 +128,9 @@ class UserController
     }
     public function update()
     {
+        /*         echo "<pre>";
+        print_r($_FILES);
+        die(); */
         $id = $_SESSION["user_id"];
 
         $name = trim($_POST["name"]);
@@ -232,13 +236,13 @@ class UserController
         imagewebp($output, $absolutePath, 85);
 
 
-        /*         $result = imagewebp($output, $absolutePath, 85);
+        /*                  $result = imagewebp($output, $absolutePath, 85);
 
         var_dump($absolutePath);
         var_dump($result);
         var_dump(file_exists($absolutePath));
 
-        die(); */
+        die();  */
 
 
         imagedestroy($image);
@@ -277,6 +281,14 @@ class UserController
 
         $users = $this->userModel->getUserBySimilarName($query);
         $bands = $this->bandModel->getBandsBySimilarName($query);
+        $lastFmBands = [];
+
+        if (count($bands) === 0) {
+
+            $lastFm = new LastFmService();
+
+            $lastFmBands = $lastFm->searchArtists($query);
+        }
         $events = $this->eventModel->getEventsBySimilarName($query);
 
         foreach ($bands as &$band) {

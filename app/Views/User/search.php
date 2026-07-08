@@ -82,6 +82,35 @@
 
                     </div>
                 <?php } ?>
+                <?php if (empty($bands) && !empty($lastFmBands)): ?>
+
+                    <?php foreach ($lastFmBands as $artist): ?>
+
+                        <div class="result-card">
+
+                            <img
+                                src="<?= !empty($artist["image"][3]["#text"])
+                                            ? htmlspecialchars($artist["image"][3]["#text"])
+                                            : "media/default_band.webp" ?>"
+                                class="result-avatar">
+
+                            <h6>
+
+                                <?= htmlspecialchars($artist["name"]) ?>
+
+                            </h6>
+
+                            <small>
+
+                                Last.fm Artist
+
+                            </small>
+
+                        </div>
+
+                    <?php endforeach; ?>
+
+                <?php endif; ?>
             </div>
 
         </section>

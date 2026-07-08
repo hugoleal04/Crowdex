@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `Crowdex`.`Band` (
   `idBand` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(150) NOT NULL,
   `Description` TEXT(65535) NULL,
-  `ProfileImage` VARCHAR(255) NULL,
+  `ProfileImage` VARCHAR(255) NULL DEFAULT 'uploads/profile_pictures/default_band.webp',
   `CoverImage` VARCHAR(255) NULL,
   `FormedYear` YEAR NULL,
   `DisbandYear` YEAR NULL,

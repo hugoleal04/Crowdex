@@ -103,7 +103,7 @@
 
                     <a
                         class="dropdown-item"
-                        href="#">
+                        href="?controller=user&action=profile">
 
                         <i class="bi bi-person"></i>
 

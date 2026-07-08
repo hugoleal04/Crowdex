@@ -23,6 +23,25 @@ class User
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    public function follow(int $id, int $idFollow, bool $request){
+        if($request){
+            $stmt = $this->pdo->prepare("
+            insert into Follow
+            (
+                idFollower,
+                idFollowing
+            )
+            Values
+            (:id,:idFollow)");
+        } else{
+            $stmt =$this->pdo->prepare("
+            DELETE FROM Follow WHERE idFollower=:id && idFollowing=:idFollow;");
+        }
+            return $stmt->execute([
+            ":id" => $id,
+            ":idFollow" => $idFollow
+        ]);
+    }
     public function getUserById(int $id): array|false
     {
         $stmt = $this->pdo->prepare("
@@ -122,20 +141,38 @@ class User
             $id
         ]);
     }
-    public function getUserBySimilarName(string $similarName): array
-    {
+    public function getUserBySimilarName(
+        string $similarName,
+        int $loggedUserId
+    ): array {
+
         $stmt = $this->pdo->prepare("
-            SELECT 
-                idUser,
-                Username,
-                Name,
-                PFP
-            FROM User
-            WHERE Username LIKE :name
-                or Name LIKE :name
-            LIMIT 10
-        ");
-        $stmt->execute(["name" => "%{$similarName}%"]);
+        SELECT
+            u.idUser,
+            u.Username,
+            u.Name,
+            u.PFP,
+
+            EXISTS (
+                SELECT 1
+                FROM Follow f
+                WHERE f.idFollower = :loggedUser
+                  AND f.idFollowing = u.idUser
+            ) AS Following
+
+        FROM User u
+
+        WHERE
+            u.Username LIKE :name
+            OR u.Name LIKE :name
+
+        LIMIT 10
+    ");
+
+        $stmt->execute([
+            "name" => "%{$similarName}%",
+            "loggedUser" => $loggedUserId
+        ]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

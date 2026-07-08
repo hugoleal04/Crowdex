@@ -49,7 +49,8 @@ class UserController
     public function getUserBySimilarName()
     {
         $name = trim($_GET["name"] ?? "");
-        $users = $this->userModel->getUserBySimilarName($name);
+
+        $users = $this->userModel->getUserBySimilarName($name, $_SESSION["user_id"]);
     }
 
     public function loginConf()
@@ -125,6 +126,14 @@ class UserController
 
         header("Location: ?controller=user&action=login&register=succesful");
         exit;
+    }
+    public function followUnfollow()
+    {
+       $id=$_SESSION["user_id"];
+
+       $this->userModel->follow($id, ($_POST["idFollow"]), ($_POST["Request"]));
+       header("Location: ?controller=user&action=search&query={$_POST["query"]}");
+       exit;
     }
     public function update()
     {
@@ -256,6 +265,14 @@ class UserController
         $countries = $this->countryModel->getCountries();
         require __DIR__ . "/../Views/User/register.php";
     }
+    public function profile()
+    {
+        if (!isset($_SESSION["user_id"])) {
+            header("Location: ?controller=user&action=login");
+            exit;
+        }
+        require __DIR__ . "/../Views/User/profile.php";
+    }
     public function login()
     {
 
@@ -279,7 +296,10 @@ class UserController
 
         $query = trim($_GET["query"] ?? "");
 
-        $users = $this->userModel->getUserBySimilarName($query);
+        $users = $this->userModel->getUserBySimilarName(
+            $query,
+            $_SESSION["user_id"]
+        );
         $bands = $this->bandModel->getBandsBySimilarName($query);
         $lastFmBands = [];
 

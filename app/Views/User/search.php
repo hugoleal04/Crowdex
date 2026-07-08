@@ -11,7 +11,8 @@
 <?php require __DIR__ . '/../Layout/navbar.php'; ?>
 
 <!-- DASHBOARD -->
-
+<!-- <?php /* var_dump($_GET);
+die(); */ ?> -->
 <div
 
     class="main-content"
@@ -41,9 +42,41 @@
                             alt="Profile">
                         <h6><?= $user["Name"] ?></h6>
                         <small>@<?= $user["Username"] ?></small>
+                        <form method="POST" action="?controller=user&action=followUnfollow">
+                            <input type="hidden" name="query" value="<?= htmlspecialchars($_GET["query"] ?? "") ?>">
+                            <input
+                                type="hidden"
+                                name="idFollow"
+                                value="<?= $user["idUser"] ?>">
+
+                            <input
+                                type="hidden"
+                                name="Request"
+                                value="<?= $user["Following"] ? 0 : 1 ?>">
+
+                            <button
+                                type="submit"
+                                class="btn <?= $user["Following"] ? "btn-outline-secondary" : "btn-crowdex" ?> btn-sm w-100 mt-3">
+
+                                <?php if ($user["Following"]): ?>
+
+                                    <i class="bi bi-check-lg"></i>
+
+                                    Following
+
+                                <?php else: ?>
+
+                                    <i class="bi bi-person-plus-fill"></i>
+
+                                    Follow
+
+                                <?php endif; ?>
+
+                            </button>
+
+                        </form>
                     </div>
                 <?php } ?>
-
             </div>
 
         </section>

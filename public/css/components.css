@@ -699,3 +699,9 @@ a {
     border-color:var(--primary);
 
 }
+
+.notification-item{
+
+    transition:.2s;
+
+}

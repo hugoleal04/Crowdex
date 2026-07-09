@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Services\MailService;
+use App\Models\Notification;
 use PDO;
 use App\Models\User;
 use App\Models\Country;
@@ -18,7 +19,8 @@ class UserController
     private Country $countryModel;
     private Band $bandModel;
     private Event $eventModel;
-
+    private PDO $pdo;
+    private Notification $notificationModel;
 
     public function __construct(PDO $pdo)
     {
@@ -26,6 +28,13 @@ class UserController
         $this->countryModel = new Country($pdo);
         $this->bandModel = new Band($pdo);
         $this->eventModel = new Event($pdo);
+
+        $this->notificationModel = new Notification($pdo);
+    }
+    private function loadNotifications(): array
+    {
+        return $this->notificationModel
+            ->getNotifications($_SESSION["user_id"]);
     }
     public function logout()
     {
@@ -251,7 +260,7 @@ class UserController
         $relativePath = "uploads/profile_pictures/" . $fileName;
 
         $absolutePath = __DIR__ . "/../../public/" . $relativePath;
-/*         $result = imagewebp($output, $absolutePath, 85);
+        /*         $result = imagewebp($output, $absolutePath, 85);
 
         var_dump($absolutePath);
         var_dump($result);
@@ -290,8 +299,23 @@ class UserController
         if (!$user) {
             die("User not found.");
         }
+        $notifications = $this->loadNotifications();
 
         require __DIR__ . "/../Views/User/profile.php";
+    }
+    public function deleteNotification()
+    {
+        $id = (int)($_POST["idNotification"] ?? 0);
+
+        $success = $this->notificationModel->deleteNotification($id);
+
+        header("Content-Type: application/json");
+
+        echo json_encode([
+            "success" => $success
+        ]);
+
+        exit;
     }
     public function login()
     {
@@ -304,6 +328,7 @@ class UserController
             header("Location: ?controller=user&action=login");
             exit;
         }
+        $notifications = $this->loadNotifications();
 
         require __DIR__ . "/../Views/User/mainmenu.php";
     }
@@ -313,6 +338,7 @@ class UserController
             header("Location: ?controller=user&action=login");
             exit;
         }
+        $notifications = $this->loadNotifications();
 
         $query = trim($_GET["query"] ?? "");
 
@@ -343,6 +369,8 @@ class UserController
             header("Location: ?controller=user&action=login");
             exit;
         }
+        $notifications = $this->loadNotifications();
+
         require __DIR__ . "/../Views/User/settings.php";
     }
 }

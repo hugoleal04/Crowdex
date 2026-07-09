@@ -10,6 +10,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Dotenv\Dotenv;
 use App\Controllers\UserController;
+use App\Controllers\ReviewController;
+
 use App\Models\User;
 
 $dotenv = Dotenv::createImmutable(__DIR__ . "/..");
@@ -36,7 +38,11 @@ switch ($controllerName) {
     case "user":
         $controller = new UserController($pdo);
         break;
-
+    
+    case "review":
+        $controller =new ReviewController($pdo);
+        break;
+        
     default:
         die("Controller não encontrado.");
 }

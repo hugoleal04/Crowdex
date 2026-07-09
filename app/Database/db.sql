@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `Crowdex`.`Band` (
   `idBand` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(150) NOT NULL,
   `Description` TEXT(65535) NULL,
-  `ProfileImage` VARCHAR(255) NULL,
+  `ProfileImage` VARCHAR(255) NULL DEFAULT 'uploads/profile_pictures/default_band.webp',
   `CoverImage` VARCHAR(255) NULL,
   `FormedYear` YEAR NULL,
   `DisbandYear` YEAR NULL,
@@ -187,8 +187,12 @@ CREATE TABLE IF NOT EXISTS `Crowdex`.`User` (
   `Country_idCountry` INT NOT NULL,
   `Verified` TINYINT NULL DEFAULT 0,
   `Type` VARCHAR(45) NOT NULL DEFAULT 'User',
+  `Username` VARCHAR(45) NOT NULL,
+  `RememberToken` VARCHAR(64) NULL,
   PRIMARY KEY (`idUser`),
   INDEX `fk_User_Country1_idx` (`Country_idCountry` ASC) VISIBLE,
+  UNIQUE INDEX `Username_UNIQUE` (`Username` ASC) VISIBLE,
+  UNIQUE INDEX `Email_UNIQUE` (`Email` ASC) VISIBLE,
   CONSTRAINT `fk_User_Country1`
     FOREIGN KEY (`Country_idCountry`)
     REFERENCES `Crowdex`.`Country` (`idCountry`)
@@ -242,27 +246,18 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Crowdex`.`FriendRequest`
+-- Table `Crowdex`.`Follow`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Crowdex`.`FriendRequest` (
-  `idFriendRequest` INT NOT NULL AUTO_INCREMENT,
-  `Approved` TINYINT NULL DEFAULT 0,
-  `Sender_idUser` INT NOT NULL,
-  `Receiver_idUser` INT NOT NULL,
-  PRIMARY KEY (`idFriendRequest`),
-  INDEX `fk_FriendRequest_User1_idx` (`Sender_idUser` ASC) VISIBLE,
-  INDEX `fk_FriendRequest_User2_idx` (`Receiver_idUser` ASC) VISIBLE,
-  CONSTRAINT `fk_FriendRequest_User1`
-    FOREIGN KEY (`Sender_idUser`)
-    REFERENCES `Crowdex`.`User` (`idUser`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_FriendRequest_User2`
-    FOREIGN KEY (`Receiver_idUser`)
-    REFERENCES `Crowdex`.`User` (`idUser`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE TABLE Follow (
+    idFollower INT NOT NULL,
+    idFollowing INT NOT NULL,
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (idFollower, idFollowing),
+
+    FOREIGN KEY (idFollower) REFERENCES User(idUser),
+    FOREIGN KEY (idFollowing) REFERENCES User(idUser)
+);
 
 
 -- -----------------------------------------------------

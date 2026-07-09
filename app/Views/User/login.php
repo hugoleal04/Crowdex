@@ -1,25 +1,34 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>
-            Login
-        </title>
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-          rel="stylesheet">
-    </head>
-    <body>
-        <!DOCTYPE html>
-<html lang="pt">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Login
+    </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
 </head>
-<body>
+
+<body class="auth-page">
     <div class="container vh-100 d-flex justify-content-center align-items-center">
         <div class="col-md-6 col-lg-5">
             <div class="card shadow p-4">
+                <?php if (isset($_GET['error'])): ?>
+                    <div class="alert alert-danger">
+                        Invalid email or password.
+                    </div>
+                <?php endif; ?>
+                <?php if (isset($_GET['register'])): ?>
+                    <div class="alert alert-success">
+                        Account created successfully.
+                    </div>
+                <?php endif; ?>
                 <form method="POST" action="?controller=user&action=loginConf">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email address</label>
@@ -35,19 +44,32 @@
                     </div>
 
                     <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">
-                            Check me out
+                        <input
+                            type="checkbox"
+                            class="form-check-input"
+                            id="remember"
+                            name="remember">
+
+                        <label class="form-check-label" for="remember">
+                            Remember me
                         </label>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100">
-                        Submit
+                    <button type="submit" class="btn btn-crowdex w-100">
+                        Log in
                     </button>
+                    <a
+                        href="?controller=user&action=register"
+                        class="btn btn-outline-crowdex w-100">
+
+                        Don't have an account? Create one
+
+                    </a>
                 </form>
             </div>
         </div>
     </div>
 
-    </body>
+</body>
+
 </html>

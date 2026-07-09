@@ -1,33 +1,101 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Services\MailService;
 use PDO;
 use App\Models\User;
 use App\Models\Country;
+use App\Models\Band;
+use App\Models\Event;
+use App\Services\LastFmService;
+
+
+
 class UserController
 {
     private User $userModel;
     private Country $countryModel;
+    private Band $bandModel;
+    private Event $eventModel;
+
 
     public function __construct(PDO $pdo)
     {
         $this->userModel = new User($pdo);
         $this->countryModel = new Country($pdo);
+        $this->bandModel = new Band($pdo);
+        $this->eventModel = new Event($pdo);
     }
-    public function loginConf(){
+    public function logout()
+    {
+        if (isset($_SESSION["user_id"])) {
+            $this->userModel->saveRememberToken($_SESSION["user_id"], null);
+        }
+
+        $_SESSION = [];
+        session_destroy();
+
+        setcookie(
+            "remember_token",
+            "",
+            time() - 3600,
+            "/"
+        );
+
+        header("Location: ?controller=user&action=login");
+        exit;
+    }
+    public function getUserBySimilarName()
+    {
+        $name = trim($_GET["name"] ?? "");
+
+        $users = $this->userModel->getUserBySimilarName($name, $_SESSION["user_id"]);
+    }
+
+    public function loginConf()
+    {
+        $remember = isset($_POST["remember"]);
         $email = trim($_POST["email"]);
         $password = trim($_POST["password"]);
         $user = $this->userModel->findByEmail($email);
-        if($user){
+        if ($user) {
             $passwordHash = $user["Password"];
-            if(password_verify($password, $passwordHash)){
-                die("Login successful");
+            if (password_verify($password, $passwordHash)) {
+                $_SESSION["user_id"] = $user["idUser"];
+                $_SESSION["username"] = $user["Username"];
+                $_SESSION["name"] = $user["Name"];
+                $_SESSION["email"] = $user["Email"];
+                $_SESSION["pfp"] = $user["PFP"];
+
+                if ($remember) {
+                    $token = bin2hex(random_bytes(32));
+
+                    $this->userModel->saveRememberToken(
+                        $user["idUser"],
+                        $token
+                    );
+
+                    setcookie(
+                        "remember_token",
+                        $token,
+                        time() + (60 * 60 * 24 * 30),
+                        "/",
+                        "",
+                        false,
+                        true
+                    );
+                }
+
+                header("Location: ?controller=user&action=menu");
+                exit;
             } else {
-                die("Email or password dont exist");
+                header("Location: ?controller=user&action=login&error=1");
+                exit;
             }
-        }else {
-            die("Email or password dont exist");
+        } else {
+            header("Location: ?controller=user&action=login&error=1");
+            exit;
         }
     }
 
@@ -35,6 +103,7 @@ class UserController
     {
         $name = trim($_POST["name"]);
         $email = trim($_POST["email"]);
+        $username = trim($_POST["username"]);
         $password = $_POST["password"];
         $confirmPassword = $_POST["confirmPassword"];
         $birthday = $_POST["birthday"];
@@ -51,11 +120,152 @@ class UserController
             $email,
             $password,
             $birthday,
+            $username,
             $countryId
         );
 
-        header("Location: ?controller=user&action=login");
+        header("Location: ?controller=user&action=login&register=succesful");
         exit;
+    }
+    public function followUnfollow()
+    {
+        $id = $_SESSION["user_id"];
+
+        $this->userModel->follow(
+            $id,
+            (int)$_POST["idFollow"],
+            (int)$_POST["Request"]
+        );
+
+        if ($_POST["redirect"] === "search") {
+
+            header("Location: ?controller=user&action=search&query=" . urlencode($_POST["query"]));
+        } else {
+
+            header("Location: ?controller=user&action=profile&id=" . (int)$_POST["idFollow"]);
+        }
+
+        exit;
+    }
+    public function update()
+    {
+        /*         echo "<pre>";
+        print_r($_FILES);
+        die(); */
+        $id = $_SESSION["user_id"];
+
+        $name = trim($_POST["name"]);
+        $username = trim($_POST["username"]);
+
+        $pfp = null;
+
+        if (!empty($_FILES["pfp"]["name"])) {
+            $pfp = $this->uploadProfilePicture($_FILES["pfp"]);
+        }
+
+        if ($_POST["newPassword"] === $_POST["newPasswordConfirm"]) {
+
+            $this->userModel->updateUser(
+                $id,
+                $name,
+                $username,
+                $pfp
+            );
+
+            if ($pfp !== null) {
+                $_SESSION["pfp"] = $pfp;
+            }
+
+            $_SESSION["name"] = $name;
+            $_SESSION["username"] = $username;
+
+            $_SESSION["success"] = "Profile updated successfully.";
+        } else {
+
+            $_SESSION["danger"] = "Passwords do not match.";
+        }
+
+        header("Location: ?controller=user&action=settings");
+        exit;
+    }
+    private function uploadProfilePicture(array $file): ?string
+    {
+        if ($file["error"] !== UPLOAD_ERR_OK) {
+            return null;
+        }
+
+        $mime = mime_content_type($file["tmp_name"]);
+
+        switch ($mime) {
+
+            case "image/jpeg":
+                $image = imagecreatefromjpeg($file["tmp_name"]);
+                break;
+
+            case "image/png":
+                $image = imagecreatefrompng($file["tmp_name"]);
+                break;
+
+            case "image/webp":
+                $image = imagecreatefromwebp($file["tmp_name"]);
+                break;
+
+            default:
+                return null;
+        }
+
+        if (!$image) {
+            return null;
+        }
+
+        $size = 512;
+
+        $output = imagecreatetruecolor($size, $size);
+
+        imagealphablending($output, false);
+        imagesavealpha($output, true);
+
+        $originalWidth = imagesx($image);
+        $originalHeight = imagesy($image);
+
+        $cropSize = min($originalWidth, $originalHeight);
+
+        $srcX = ($originalWidth - $cropSize) / 2;
+        $srcY = ($originalHeight - $cropSize) / 2;
+
+        imagecopyresampled(
+            $output,
+            $image,
+            0,
+            0,
+            $srcX,
+            $srcY,
+            $size,
+            $size,
+            $cropSize,
+            $cropSize
+        );
+
+        $fileName = bin2hex(random_bytes(16)) . ".webp";
+
+        $relativePath = "uploads/profile_pictures/" . $fileName;
+
+        $absolutePath = __DIR__ . "/../../public/" . $relativePath;
+/*         $result = imagewebp($output, $absolutePath, 85);
+
+        var_dump($absolutePath);
+        var_dump($result);
+        var_dump(file_exists($absolutePath));
+        die(); */
+
+
+        imagewebp($output, $absolutePath, 85);
+
+
+        imagedestroy($image);
+        imagedestroy($output);
+
+        return $relativePath;
     }
 
     public function register()
@@ -63,10 +273,76 @@ class UserController
         $countries = $this->countryModel->getCountries();
         require __DIR__ . "/../Views/User/register.php";
     }
+    public function profile()
+    {
+        if (!isset($_SESSION["user_id"])) {
+            header("Location: ?controller=user&action=login");
+            exit;
+        }
+
+        $id = (int)($_GET["id"] ?? 0);
+
+        $user = $this->userModel->getUserById(
+            $id,
+            $_SESSION["user_id"]
+        );
+
+        if (!$user) {
+            die("User not found.");
+        }
+
+        require __DIR__ . "/../Views/User/profile.php";
+    }
     public function login()
     {
-        
+
         require __DIR__ . "/../Views/User/login.php";
     }
+    public function menu()
+    {
+        if (!isset($_SESSION["user_id"])) {
+            header("Location: ?controller=user&action=login");
+            exit;
+        }
+
+        require __DIR__ . "/../Views/User/mainmenu.php";
+    }
+    public function search()
+    {
+        if (!isset($_SESSION["user_id"])) {
+            header("Location: ?controller=user&action=login");
+            exit;
+        }
+
+        $query = trim($_GET["query"] ?? "");
+
+        $users = $this->userModel->getUserBySimilarName(
+            $query,
+            $_SESSION["user_id"]
+        );
+        $bands = $this->bandModel->getBandsBySimilarName($query);
+        $lastFmBands = [];
+
+        if (count($bands) === 0) {
+
+            $lastFm = new LastFmService();
+
+            $lastFmBands = $lastFm->searchArtists($query);
+        }
+        $events = $this->eventModel->getEventsBySimilarName($query);
+
+        foreach ($bands as &$band) {
+            $band["Genres"] = $this->bandModel->getGenres($band["idBand"]);
+        }
+
+        require __DIR__ . "/../Views/User/search.php";
+    }
+    public function settings()
+    {
+        if (!isset($_SESSION["user_id"])) {
+            header("Location: ?controller=user&action=login");
+            exit;
+        }
+        require __DIR__ . "/../Views/User/settings.php";
+    }
 }
-?>

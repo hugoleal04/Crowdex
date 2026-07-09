@@ -1,0 +1,188 @@
+/* ==========================================
+                CROWDEX THEME
+========================================== */
+
+:root {
+
+    /* BRAND */
+
+    --primary: #FFBF00;
+
+    --primary-hover: #E8AC00;
+
+    --secondary: #447332;
+
+    --dark: #233D1F;
+
+    --light: #FFF4A3;
+
+    --white: #FFFFFF;
+
+    /* UI */
+
+    --background: #FDF7E8;
+
+    --surface: #FFFFFF;
+
+    --border: #ECECEC;
+
+    --text: #233D1F;
+
+    --text-light: #666666;
+
+}
+
+/* ==========================================
+                RESET
+========================================== */
+
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+/* ==========================================
+                BODY
+========================================== */
+
+body {
+
+    font-family: "Space Grotesk", sans-serif;
+
+    background: var(--background);
+
+    color: var(--text);
+
+    min-height: 100vh;
+
+}
+
+/* ==========================================
+            AUTH PAGES
+========================================== */
+
+.auth-page {
+
+    background:
+
+        linear-gradient(135deg,
+
+            var(--secondary) 0%,
+
+            var(--light) 55%,
+
+            var(--primary) 100%);
+
+}
+
+/* ==========================================
+                TYPOGRAPHY
+========================================== */
+
+h1 {
+
+    font-size: 2.2rem;
+
+    font-weight: 700;
+
+}
+
+h2 {
+
+    font-size: 1.9rem;
+
+    font-weight: 700;
+
+}
+
+h3 {
+
+    font-size: 1.5rem;
+
+    font-weight: 700;
+
+}
+
+h4 {
+
+    font-size: 1.2rem;
+
+    font-weight: 700;
+
+}
+
+h5 {
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+}
+
+p {
+
+    color: var(--text-light);
+
+}
+
+/* ==========================================
+                LINKS
+========================================== */
+
+a {
+
+    color: var(--secondary);
+
+    transition: .2s;
+
+}
+
+a:hover {
+
+    color: var(--primary);
+
+}
+
+/* ==========================================
+                HR
+========================================== */
+
+hr {
+
+    border: none;
+
+    height: 1px;
+
+    background: #FFFFFF22;
+
+}
+
+/* ==========================================
+            TEXT SELECTION
+========================================== */
+
+::selection {
+
+    background: var(--primary);
+
+    color: var(--dark);
+
+}
+
+/* ==========================================
+            TRANSITIONS
+========================================== */
+
+button,
+input,
+a,
+.card {
+
+    transition: .25s;
+
+}

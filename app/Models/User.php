@@ -23,8 +23,21 @@ class User
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    public function follow(int $id, int $idFollow, bool $request){
-        if($request){
+    public function createNotification(int $id, string $descripion)
+    {
+        $stmt = $this->pdo->prepare("
+        insert into Notification (idUser, Text) values (?,?);");
+
+        return $stmt->execute([
+            $id,
+            $descripion
+        ]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public function follow(int $id, int $idFollow, bool $request)
+    {
+        if ($request) {
             $stmt = $this->pdo->prepare("
             insert into Follow
             (
@@ -33,26 +46,45 @@ class User
             )
             Values
             (:id,:idFollow)");
-        } else{
-            $stmt =$this->pdo->prepare("
+            $this->createNotification($idFollow, $_SESSION["name"] . " started following you.",);
+        } else {
+            $stmt = $this->pdo->prepare("
             DELETE FROM Follow WHERE idFollower=:id && idFollowing=:idFollow;");
         }
-            return $stmt->execute([
+        return $stmt->execute([
             ":id" => $id,
             ":idFollow" => $idFollow
         ]);
     }
-    public function getUserById(int $id): array|false
+    public function getUserById(int $id, int $loggedUserId): ?array
     {
         $stmt = $this->pdo->prepare("
-            SELECT *
-            FROM user
-            WHERE idUser = ?
-        ");
+        SELECT
+            u.idUser,
+            u.Name,
+            u.Username,
+            u.Email,
+            u.PFP,
 
-        $stmt->execute([$id]);
+            EXISTS(
+                SELECT 1
+                FROM Follow f
+                WHERE f.idFollower = :loggedUser
+                AND f.idFollowing = u.idUser
+            ) AS Following
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        FROM User u
+        WHERE u.idUser = :id
+    ");
+
+        $stmt->execute([
+            "id" => $id,
+            "loggedUser" => $loggedUserId
+        ]);
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $user ?: null;
     }
     public function createUser(
         string $name,

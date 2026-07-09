@@ -35,47 +35,54 @@ die(); */ ?> -->
 
             <div class="results-grid">
                 <?php foreach ($users as $user) { ?>
-                    <div class="result-card">
-                        <img
-                            src="<?= $user["PFP"] ?>"
-                            class="result-avatar"
-                            alt="Profile">
-                        <h6><?= $user["Name"] ?></h6>
-                        <small>@<?= $user["Username"] ?></small>
-                        <form method="POST" action="?controller=user&action=followUnfollow">
-                            <input type="hidden" name="query" value="<?= htmlspecialchars($_GET["query"] ?? "") ?>">
-                            <input
-                                type="hidden"
-                                name="idFollow"
-                                value="<?= $user["idUser"] ?>">
+                    <a
+                        href="?controller=user&action=profile&id=<?= $user["idUser"] ?>"
+                        class="text-decoration-none text-dark">
+                        <div class="result-card">
+                            <img
+                                src="<?= $user["PFP"] ?>"
+                                class="result-avatar"
+                                alt="Profile">
+                            <h6><?= $user["Name"] ?></h6>
+                            <small>@<?= $user["Username"] ?></small>
+                            <?php if ($user["idUser"] != $_SESSION["user_id"]): ?>
+                                <form method="POST" action="?controller=user&action=followUnfollow">
+                                    <input type="hidden" name="redirect" value="search">
+                                    <input type="hidden" name="query" value="<?= htmlspecialchars($_GET["query"] ?? "") ?>">
+                                    <input
+                                        type="hidden"
+                                        name="idFollow"
+                                        value="<?= $user["idUser"] ?>">
 
-                            <input
-                                type="hidden"
-                                name="Request"
-                                value="<?= $user["Following"] ? 0 : 1 ?>">
+                                    <input
+                                        type="hidden"
+                                        name="Request"
+                                        value="<?= $user["Following"] ? 0 : 1 ?>">
 
-                            <button
-                                type="submit"
-                                class="btn <?= $user["Following"] ? "btn-outline-secondary" : "btn-crowdex" ?> btn-sm w-100 mt-3">
+                                    <button
+                                        type="submit"
+                                        class="btn <?= $user["Following"] ? "btn-outline-secondary" : "btn-crowdex" ?> btn-sm w-100 mt-3">
 
-                                <?php if ($user["Following"]): ?>
+                                        <?php if ($user["Following"]): ?>
 
-                                    <i class="bi bi-check-lg"></i>
+                                            <i class="bi bi-check-lg"></i>
 
-                                    Following
+                                            Following
 
-                                <?php else: ?>
+                                        <?php else: ?>
 
-                                    <i class="bi bi-person-plus-fill"></i>
+                                            <i class="bi bi-person-plus-fill"></i>
 
-                                    Follow
+                                            Follow
 
-                                <?php endif; ?>
+                                        <?php endif; ?>
 
-                            </button>
+                                    </button>
 
-                        </form>
-                    </div>
+                                </form>
+                            <?php endif; ?>
+                        </div>
+                    </a>
                 <?php } ?>
             </div>
 

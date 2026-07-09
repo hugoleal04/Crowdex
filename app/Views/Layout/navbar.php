@@ -103,7 +103,7 @@
 
                     <a
                         class="dropdown-item"
-                        href="?controller=user&action=profile">
+                        href="?controller=user&action=profile&id=<?= $_SESSION["user_id"] ?>">
 
                         <i class="bi bi-person"></i>
 

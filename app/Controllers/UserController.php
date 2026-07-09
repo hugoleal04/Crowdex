@@ -129,11 +129,23 @@ class UserController
     }
     public function followUnfollow()
     {
-       $id=$_SESSION["user_id"];
+        $id = $_SESSION["user_id"];
 
-       $this->userModel->follow($id, ($_POST["idFollow"]), ($_POST["Request"]));
-       header("Location: ?controller=user&action=search&query={$_POST["query"]}");
-       exit;
+        $this->userModel->follow(
+            $id,
+            (int)$_POST["idFollow"],
+            (int)$_POST["Request"]
+        );
+
+        if ($_POST["redirect"] === "search") {
+
+            header("Location: ?controller=user&action=search&query=" . urlencode($_POST["query"]));
+        } else {
+
+            header("Location: ?controller=user&action=profile&id=" . (int)$_POST["idFollow"]);
+        }
+
+        exit;
     }
     public function update()
     {
@@ -239,19 +251,15 @@ class UserController
         $relativePath = "uploads/profile_pictures/" . $fileName;
 
         $absolutePath = __DIR__ . "/../../public/" . $relativePath;
-
-
-
-        imagewebp($output, $absolutePath, 85);
-
-
-        /*                  $result = imagewebp($output, $absolutePath, 85);
+/*         $result = imagewebp($output, $absolutePath, 85);
 
         var_dump($absolutePath);
         var_dump($result);
         var_dump(file_exists($absolutePath));
+        die(); */
 
-        die();  */
+
+        imagewebp($output, $absolutePath, 85);
 
 
         imagedestroy($image);
@@ -271,6 +279,18 @@ class UserController
             header("Location: ?controller=user&action=login");
             exit;
         }
+
+        $id = (int)($_GET["id"] ?? 0);
+
+        $user = $this->userModel->getUserById(
+            $id,
+            $_SESSION["user_id"]
+        );
+
+        if (!$user) {
+            die("User not found.");
+        }
+
         require __DIR__ . "/../Views/User/profile.php";
     }
     public function login()

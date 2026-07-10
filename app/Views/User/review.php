@@ -1,9 +1,11 @@
 <?php // TODO: Arranjar a validação do tamanho de dados
- require __DIR__ . '/../Layout/header.php'; ?>
+require __DIR__ . '/../Layout/header.php'; ?>
 
 <?php require __DIR__ . '/../Layout/sidebar.php'; ?>
 
-<?php require __DIR__ . '/../Layout/navbar.php'; ?>
+<?php require __DIR__ . '/../Layout/navbar.php';
+/* var_dump($_SESSION);
+die; */ ?>
 
 <div class="main-content" id="mainContent">
 
@@ -38,7 +40,38 @@
                             </p>
 
                         </div>
+                        <div class="dashboard-card p-4">
+                            <h3><?= htmlspecialchars($concert["EventTitle"]) ?></h3>
 
+                            <div class="d-flex align-items-center mt-3">
+
+                                <img
+                                    src="<?= htmlspecialchars($concert["BandProfileImage"]) ?>"
+                                    class="rounded-circle me-3"
+                                    style="width:80px;height:80px;object-fit:cover;">
+
+                                <div>
+
+                                    <h5 class="mb-1">
+                                        <?= htmlspecialchars($concert["BandName"]) ?>
+                                    </h5>
+
+                                    <div class="text-muted">
+
+                                        <i class="bi bi-mic-fill"></i>
+                                        <?= htmlspecialchars($concert["Stage"]) ?>
+
+                                        <br>
+
+                                        <i class="bi bi-calendar-event"></i>
+                                        <?= date("d/m/Y H:i", strtotime($concert["StartDateTime"])) ?>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
                         <form
                             method="POST"
                             action="?controller=review&action=createReview">
@@ -46,7 +79,7 @@
                             <input
                                 type="hidden"
                                 name="concert_id"
-                                value="<?= htmlspecialchars($_GET["id"]) ?>">
+                                value="<?= htmlspecialchars($_GET["concert_id"]) ?>">
 
                             <input
                                 type="hidden"
@@ -66,7 +99,7 @@
                                     id="star-rating"
                                     class="fs-2">
 
-                                    <?php for($i = 1; $i <= 5; $i++): ?>
+                                    <?php for ($i = 1; $i <= 5; $i++): ?>
 
                                         <i
                                             class="bi bi-star rating-star"
@@ -125,95 +158,93 @@
 </div>
 
 <script>
+    const stars = document.querySelectorAll(".rating-star");
 
-const stars = document.querySelectorAll(".rating-star");
+    const input = document.getElementById("rating");
 
-const input = document.getElementById("rating");
+    const text = document.getElementById("rating-text");
 
-const text = document.getElementById("rating-text");
+    let selected = 0;
 
-let selected = 0;
+    function draw(rating) {
 
-function draw(rating){
+        stars.forEach(star => {
 
-    stars.forEach(star=>{
+            const value = Number(star.dataset.value);
 
-        const value = Number(star.dataset.value);
+            star.className = "bi rating-star";
 
-        star.className = "bi rating-star";
+            if (rating >= value) {
 
-        if(rating >= value){
+                star.classList.add("bi-star-fill");
 
-            star.classList.add("bi-star-fill");
+            } else if (rating >= value - 0.5) {
 
-        }else if(rating >= value - 0.5){
+                star.classList.add("bi-star-half");
 
-            star.classList.add("bi-star-half");
+            } else {
 
-        }else{
+                star.classList.add("bi-star");
 
-            star.classList.add("bi-star");
+            }
+
+        });
+
+        if (rating === 0) {
+
+            text.textContent = "Select a rating";
+
+        } else {
+
+            text.textContent = rating.toFixed(1) + " ★";
 
         }
 
-    });
-
-    if(rating === 0){
-
-        text.textContent = "Select a rating";
-
-    }else{
-
-        text.textContent = rating.toFixed(1) + " ★";
-
     }
 
-}
+    stars.forEach(star => {
 
-stars.forEach(star=>{
+        star.addEventListener("mousemove", e => {
 
-    star.addEventListener("mousemove", e=>{
+            const rect = star.getBoundingClientRect();
 
-        const rect = star.getBoundingClientRect();
+            const x = e.clientX - rect.left;
 
-        const x = e.clientX - rect.left;
+            const value = Number(star.dataset.value);
 
-        const value = Number(star.dataset.value);
+            const hoverRating = x < rect.width / 2 ?
+                value - 0.5 :
+                value;
 
-        const hoverRating = x < rect.width/2
-            ? value - 0.5
-            : value;
+            draw(hoverRating);
 
-        draw(hoverRating);
+        });
+
+        star.addEventListener("click", e => {
+
+            const rect = star.getBoundingClientRect();
+
+            const x = e.clientX - rect.left;
+
+            const value = Number(star.dataset.value);
+
+            selected = x < rect.width / 2 ?
+                value - 0.5 :
+                value;
+
+            input.value = selected;
+
+            draw(selected);
+
+        });
 
     });
 
-    star.addEventListener("click", e=>{
-
-        const rect = star.getBoundingClientRect();
-
-        const x = e.clientX - rect.left;
-
-        const value = Number(star.dataset.value);
-
-        selected = x < rect.width/2
-            ? value - 0.5
-            : value;
-
-        input.value = selected;
+    document.getElementById("star-rating").addEventListener("mouseleave", () => {
 
         draw(selected);
 
     });
-
-});
-
-document.getElementById("star-rating").addEventListener("mouseleave", ()=>{
-
-    draw(selected);
-
-});
-
 </script>
 
 <?php require __DIR__ . '/../Layout/scripts.php'; ?>

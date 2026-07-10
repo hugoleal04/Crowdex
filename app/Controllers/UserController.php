@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Services\MailService;
 use App\Models\Notification;
+use App\Models\Review;
 use PDO;
 use App\Models\User;
 use App\Models\Country;
@@ -19,6 +20,8 @@ class UserController
     private Country $countryModel;
     private Band $bandModel;
     private Event $eventModel;
+    private Review $reviewModel;
+
     private PDO $pdo;
     private Notification $notificationModel;
 
@@ -28,6 +31,8 @@ class UserController
         $this->countryModel = new Country($pdo);
         $this->bandModel = new Band($pdo);
         $this->eventModel = new Event($pdo);
+        $this->reviewModel = new Review($pdo);
+
 
         $this->notificationModel = new Notification($pdo);
     }
@@ -331,7 +336,7 @@ class UserController
             exit;
         }
         $notifications = $this->loadNotifications();
-
+        $reviews = $this->reviewModel->getReviewsFromFollowing($_SESSION["user_id"]);
         require __DIR__ . "/../Views/User/mainmenu.php";
     }
     public function search()

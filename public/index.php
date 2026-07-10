@@ -69,11 +69,11 @@ try {
 
 } catch (\Throwable $e) {
 
-    error_log($e);
-
-    http_response_code(500);
-
-    require __DIR__ . "/../app/Views/Errors/500.php";
-
+    echo "<pre>";
+    echo "Message: " . $e->getMessage() . PHP_EOL;
+    echo "File: " . $e->getFile() . PHP_EOL;
+    echo "Line: " . $e->getLine() . PHP_EOL;
+    echo PHP_EOL;
+    echo $e->getTraceAsString();
     exit;
 }

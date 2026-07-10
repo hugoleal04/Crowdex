@@ -1,6 +1,8 @@
 <?php require __DIR__ . '/../Layout/header.php'; ?>
 <?php require __DIR__ . '/../Layout/sidebar.php'; ?>
 <?php require __DIR__ . '/../Layout/navbar.php'; ?>
+<?php /** @var array $reviews */ ?>
+
 <div class="main-content" id="mainContent">
 
     <div class="container-fluid ">
@@ -69,51 +71,89 @@
 
             <div class="section-header">
 
-                <h4>Friends Activity</h4>
-
-                <a href="#">See more</a>
-
+                <h4>Recent Reviews</h4>
             </div>
 
-            <div class="activity-card">
+            <div class="reviews-carousel">
 
-                <div class="activity-avatar">
+                <?php foreach ($reviews as $review): ?>
 
-                    H
+                    <div class="dashboard-card review-card">
 
-                </div>
 
-                <div>
+                        <div class="d-flex align-items-center mb-3">
 
-                    <strong>Hugo</strong>
+                            <img
+                                src="<?= htmlspecialchars($review["PFP"]) ?>"
+                                class="rounded-circle me-2"
+                                style="width:48px;height:48px;object-fit:cover;">
 
-                    reviewed
+                            <div>
 
-                    <strong>Coldplay</strong>
+                                <strong>
+                                    <?= htmlspecialchars($review["Username"]) ?>
+                                </strong>
 
-                    ★★★★★
+                                <br>
 
-                </div>
+                                <small class="text-muted">
+                                    <?= date("d M Y", strtotime($review["CreatedAt"])) ?>
+                                </small>
 
-            </div>
+                            </div>
 
-            <div class="activity-card">
+                        </div>
 
-                <div class="activity-avatar">
+                        <div class="d-flex align-items-center mb-2 review-concert">
 
-                    J
+                            <img
+                                src="<?= htmlspecialchars($review["BandProfileImage"]) ?>"
+                                class="rounded-circle me-2"
+                                style="width:32px;height:32px;object-fit:cover;">
 
-                </div>
+                            <div>
 
-                <div>
+                                <strong>
+                                    <?= htmlspecialchars($review["BandName"]) ?>
+                                </strong>
 
-                    <strong>João</strong>
+                                <br>
 
-                    is attending
+                                <small class="text-muted review-event">
+                                    <?= htmlspecialchars($review["EventTitle"]) ?>
+                                </small>
 
-                    <strong>NOS Alive</strong>
+                            </div>
 
-                </div>
+                        </div>
+
+                        <div class="mb-2">
+
+                            <?php
+                            for ($i = 1; $i <= 5; $i++) {
+
+                                if ($review["Rating"] >= $i) {
+
+                                    echo '<i class="bi bi-star-fill"></i>';
+                                } elseif ($review["Rating"] >= $i - 0.5) {
+
+                                    echo '<i class="bi bi-star-half"></i>';
+                                } else {
+
+                                    echo '<i class="bi bi-star"></i>';
+                                }
+                            }
+                            ?>
+
+                        </div>
+
+                        <p class="review-text small text-muted">
+                            <?= htmlspecialchars($review["Text"]) ?>
+                        </p>
+
+                    </div>
+
+                <?php endforeach; ?>
 
             </div>
 

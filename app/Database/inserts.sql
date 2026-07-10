@@ -1571,3 +1571,63 @@ VALUES
 
 ('Muse Lover','muse@crowdex.test','$2y$12$ahGdSL/ghzdT5FEiuKS3xODBEGcI2ykuT.0bNhLOszWIiunkJc1oy','1997-07-01',1,1,'User','muselover');
 
+-- ==========================
+-- FOLLOW
+-- ==========================
+INSERT INTO Follow (idFollower, idFollowing, CreatedAt) VALUES
+(42, 1, NOW()),
+(42, 2, NOW()),
+(42, 5, NOW()),
+(42, 8, NOW()),
+(42, 35, NOW()),
+(42, 36, NOW()),
+(42, 38, NOW()),
+(42, 40, NOW()),
+
+(1, 42, NOW()),
+(2, 42, NOW()),
+(7, 42, NOW()),
+(12, 42, NOW()),
+(18, 42, NOW()),
+(35, 42, NOW()),
+(39, 42, NOW());
+
+-- ==========================
+-- REVIEW
+-- ==========================
+
+INSERT INTO Review
+(User_idUser, Concert_idConcert, Rating, Text, CreatedAt)
+VALUES
+
+-- João Silva
+(1, 1, 5.0, 'Coldplay were absolutely phenomenal. Easily one of the best concerts I have ever attended.', NOW()),
+(1, 11, 5.0, 'Metallica still dominates every stage they step on.', NOW()),
+
+-- Maria Costa
+(2, 2, 4.5, 'Imagine Dragons put on an amazing show. Great visuals and energy.', NOW()),
+(2, 15, 5.0, 'The Weeknd exceeded every expectation. Incredible performance.', NOW()),
+
+-- Lucas Pereira
+(5, 6, 4.5, 'Bring Me The Horizon sounded heavier live than I expected. Amazing crowd.', NOW()),
+(5, 3, 5.0, 'Architects never disappoint. Outstanding concert from start to finish.', NOW()),
+
+-- Miguel Sousa
+(8, 8, 5.0, 'Linkin Park returning to the stage was unforgettable.', NOW()),
+(8, 5, 4.0, 'Ghost delivered a theatrical experience unlike any other band.', NOW()),
+
+-- Coldplay Fan
+(35, 1, 5.0, 'Chris Martin knows exactly how to connect with the audience. Perfect night.', NOW()),
+(35, 16, 5.0, 'Seeing Coldplay at Rock in Rio was a dream come true.', NOW()),
+
+-- Sleep Token Addict
+(36, 9, 5.0, 'Sleep Token were hypnotic. Every song felt emotional and powerful.', NOW()),
+(36, 21, 4.5, 'Hellfest was the perfect place to see them live.', NOW()),
+
+-- Ghost Fan
+(38, 5, 5.0, 'Ghost never disappoints. The stage production was incredible.', NOW()),
+(38, 21, 4.5, 'Amazing atmosphere and fantastic performance from every member.', NOW()),
+
+-- Muse Lover
+(40, 7, 5.0, 'Muse were flawless. Matt Bellamy is unreal live.', NOW()),
+(40, 22, 4.5, 'Fantastic performance at Rock Werchter. Incredible sound quality.', NOW());

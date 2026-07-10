@@ -41,9 +41,19 @@ class ConcertController
         exit;
     }
     function createConcert() {}
-    function getConcertById()
+    public function getConcertById()
     {
-        return $this->ConcertModel->getConcertById($_POST["id"]);
+        $concert = $this->ConcertModel
+            ->getConcertById((int)$_POST["id"]);
+
+        if ($concert === false) {
+
+            http_response_code(404);
+            require __DIR__ . "/../Views/Errors/404.php";
+            exit;
+        }
+
+        return $concert;
     }
     private function loadNotifications(): array
     {

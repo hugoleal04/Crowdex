@@ -63,13 +63,14 @@ class ReviewController
 
         $concert = $this->ConcertModel->getConcertById((int)$_GET["concert_id"]);
 
-        if ($concert !== false) {
-            $notifications = $this->loadNotifications();
-            require __DIR__ . "/../Views/User/review.php";
-        } else {
-            // Concerto não existe
+        if ($concert === false) {
             http_response_code(404);
-            echo "Concert not found.";
+            require __DIR__ . "/../Views/Errors/404.php";
+            exit;
         }
+
+        $notifications = $this->loadNotifications();
+
+        require __DIR__ . "/../Views/User/review.php";
     }
 }

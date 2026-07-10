@@ -297,7 +297,9 @@ class UserController
         );
 
         if (!$user) {
-            die("User not found.");
+            http_response_code(404);
+            require __DIR__ . "/../Views/Errors/404.php";
+            exit;
         }
         $notifications = $this->loadNotifications();
 

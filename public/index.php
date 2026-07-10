@@ -24,9 +24,11 @@ if (!isset($_SESSION["user_id"]) && isset($_COOKIE["remember_token"])) {
     $userModel = new User($pdo);
     $user = $userModel->findByRememberToken($_COOKIE["remember_token"]);
     if ($user) {
-
         $_SESSION["user_id"] = $user["idUser"];
         $_SESSION["username"] = $user["Username"];
+        $_SESSION["name"] = $user["Name"];
+        $_SESSION["email"] = $user["Email"];
+        $_SESSION["pfp"] = $user["PFP"];
     }
 }
 
@@ -38,11 +40,11 @@ switch ($controllerName) {
     case "user":
         $controller = new UserController($pdo);
         break;
-    
+
     case "review":
-        $controller =new ReviewController($pdo);
+        $controller = new ReviewController($pdo);
         break;
-        
+
     default:
         die("Controller não encontrado.");
 }

@@ -69,10 +69,11 @@ try {
 
 } catch (\Throwable $e) {
 
+    error_log($e);
+
     http_response_code(500);
 
-    //error_log($e);
-
     require __DIR__ . "/../app/Views/Errors/500.php";
+
     exit;
 }

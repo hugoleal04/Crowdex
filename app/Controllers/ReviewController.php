@@ -44,10 +44,34 @@ class ReviewController
     public function createReview()
     {
         $rating = (float)$_POST["rating"];
-        $idConcert = $_POST["concert_id"];
-        $text = $_POST["text"];
+        $idConcert = (int)$_POST["concert_id"];
+        $text = trim($_POST["text"]);
 
-        $this->reviewModel->createReview($_SESSION["user_id"], $idConcert, $rating, $text);
+        $review = $this->reviewModel->getReviewByUserAndConcert(
+            $_SESSION["user_id"],
+            $idConcert
+        );
+
+        if ($review === false) {
+
+            $this->reviewModel->createReview(
+                $_SESSION["user_id"],
+                $idConcert,
+                $rating,
+                $text
+            );
+        } else {
+
+            $this->reviewModel->updateReview(
+                $_SESSION["user_id"],
+                $idConcert,
+                $rating,
+                $text
+            );
+        }
+
+        header("Location: ?controller=review&action=create&concert_id=" . $idConcert);
+        exit;
     }
     private function loadNotifications(): array
     {
@@ -61,13 +85,20 @@ class ReviewController
             exit;
         }
 
-        $concert = $this->ConcertModel->getConcertById((int)$_GET["concert_id"]);
+        $idConcert = (int)($_GET["concert_id"] ?? 0);
+
+        $concert = $this->ConcertModel->getConcertById($idConcert);
 
         if ($concert === false) {
             http_response_code(404);
             require __DIR__ . "/../Views/Errors/404.php";
             exit;
         }
+
+        $review = $this->reviewModel->getReviewByUserAndConcert(
+            $_SESSION["user_id"],
+            $idConcert
+        );
 
         $notifications = $this->loadNotifications();
 

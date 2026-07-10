@@ -85,67 +85,65 @@ die; */ ?>
                                 type="hidden"
                                 id="rating"
                                 name="rating"
-                                value="0">
+                                value="<?= $review ? $review["Rating"] : 0 ?>">
 
-                            <div class="mb-4">
+                                <div class="mb-4">
 
-                                <label class="form-label">
+                            <label class="form-label">
 
-                                    Rating
+                                Rating
 
-                                </label>
+                            </label>
 
-                                <div
-                                    id="star-rating"
-                                    class="fs-2">
+                            <div
+                                id="star-rating"
+                                class="fs-2">
 
-                                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                                <?php for ($i = 1; $i <= 5; $i++): ?>
 
-                                        <i
-                                            class="bi bi-star rating-star"
-                                            data-value="<?= $i ?>">
+                                    <i
+                                        class="bi bi-star rating-star"
+                                        data-value="<?= $i ?>">
 
-                                        </i>
+                                    </i>
 
-                                    <?php endfor; ?>
-
-                                </div>
+                                <?php endfor; ?>
 
                             </div>
-
-                            <div class="mb-4">
-
-                                <label class="form-label">
-
-                                    Review
-
-                                </label>
-
-                                <textarea
-                                    class="form-control"
-                                    name="text"
-                                    rows="8"
-                                    placeholder="Tell everyone how the concert was..."></textarea>
-
-                            </div>
-
-                            <div class="d-flex justify-content-end">
-
-                                <button
-                                    type="submit"
-                                    class="btn btn-crowdex">
-
-                                    <i class="bi bi-send-fill"></i>
-
-                                    Publish Review
-
-                                </button>
-
-                            </div>
-
-                        </form>
 
                     </div>
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+
+                            Review
+
+                        </label>
+
+                        <textarea
+                            class="form-control"
+                            name="text"
+                            rows="8"
+                            placeholder="Tell everyone how the concert was..."><?= $review ? htmlspecialchars($review["Text"]) : "" ?></textarea>
+
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+
+                        <button
+                            type="submit"
+                            class="btn btn-crowdex">
+
+                            <i class="bi <?= $review ? "bi-pencil-fill" : "bi-send-fill" ?>"></i>
+
+                            <?= $review ? "Update Review" : "Publish Review" ?>
+
+                        </button>
+
+                    </div>
+
+                    </form>
 
                 </div>
 
@@ -157,6 +155,8 @@ die; */ ?>
 
 </div>
 
+</div>
+
 <script>
     const stars = document.querySelectorAll(".rating-star");
 
@@ -164,7 +164,7 @@ die; */ ?>
 
     const text = document.getElementById("rating-text");
 
-    let selected = 0;
+    let selected = <?= $review ? $review["Rating"] : 0 ?>;
 
     function draw(rating) {
 
@@ -245,6 +245,8 @@ die; */ ?>
         draw(selected);
 
     });
+    draw(selected);
+    input.value = selected;
 </script>
 
 <?php require __DIR__ . '/../Layout/scripts.php'; ?>

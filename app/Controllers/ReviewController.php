@@ -58,7 +58,8 @@ class ReviewController
                 $_SESSION["user_id"],
                 $idConcert,
                 $rating,
-                $text
+                $text,
+                $_FILES["photos"]
             );
         } else {
 
@@ -66,7 +67,12 @@ class ReviewController
                 $_SESSION["user_id"],
                 $idConcert,
                 $rating,
-                $text
+                $text,
+                $_FILES["photos"],
+                $_POST["deleteMedia"] ?? []
+            );
+            $this->reviewModel->deleteMedia(
+                $_POST["deleteMedia"] ?? []
             );
         }
 
@@ -99,6 +105,15 @@ class ReviewController
             $_SESSION["user_id"],
             $idConcert
         );
+
+        $reviewMedia = [];
+
+        if ($review !== false) {
+
+            $reviewMedia = $this->reviewModel->getMedia(
+                $review["idReview"]
+            );
+        }
 
         $notifications = $this->loadNotifications();
 

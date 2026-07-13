@@ -50,6 +50,7 @@ switch ($controllerName) {
     case "concert":
         $controller = new ConcertController($pdo);
         break;
+        
     case "band":
         $controller = new BandController($pdo);
         break;

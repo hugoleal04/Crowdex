@@ -1,6 +1,10 @@
 <?php require __DIR__ . '/../Layout/header.php'; ?>
 <?php require __DIR__ . '/../Layout/sidebar.php'; ?>
 <?php require __DIR__ . '/../Layout/navbar.php'; ?>
+<?php /** @var array $band */ ?>
+<?php /** @var int $followers */ ?>
+<?php /** @var array $concerts */ ?>
+
 
 <div class="main-content" id="mainContent">
 

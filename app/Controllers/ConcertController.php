@@ -16,6 +16,8 @@ class ConcertController
     private Concert $ConcertModel;
     private Review $reviewModel;
     private Notification $notificationModel;
+    private PDO $pdo;
+
     public function __construct(PDO $pdo)
     {
         $this->userModel = new User($pdo);
@@ -43,7 +45,7 @@ class ConcertController
     public function getConcertById()
     {
         $concert = $this->ConcertModel
-            ->getConcertById((int)$_POST["id"]);
+            ->getUpcomingConcertsByUserCountry((int)$_POST["id"]);
 
         if ($concert === false) {
 
@@ -58,5 +60,15 @@ class ConcertController
     {
         return $this->notificationModel
             ->getNotifications($_SESSION["user_id"]);
+    }
+
+    public function profile()
+    {
+        if (!isset($_SESSION["user_id"])) {
+            header("Location: ?controller=user&action=login");
+            exit;
+        }
+        $notifications = $this->loadNotifications();
+        require __DIR__ . "/../Views/Concert/profile.php";
     }
 }

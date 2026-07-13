@@ -775,3 +775,163 @@ a {
     text-overflow: ellipsis;
 
 }
+
+.concert-following{
+
+    border:3px solid var(--secondary);
+
+    box-shadow:0 0 0 4px rgba(68,115,50,.18);
+
+}
+
+.concert-cover{
+
+    width:100%;
+    aspect-ratio:16/9;
+
+    object-fit:cover;
+
+    object-position:center;
+
+    border-radius:22px 22px 0 0;
+
+    display:block;
+
+}
+
+
+/* ===========================
+        MASONRY GALLERY
+=========================== */
+
+.masonry-gallery{
+    columns: 4 250px;
+    column-gap: 18px;
+}
+
+.masonry-item{
+    break-inside: avoid;
+    margin-bottom: 18px;
+}
+
+.masonry-item img{
+    width:100%;
+    border-radius:18px;
+    display:block;
+    object-fit:cover;
+    transition:.2s;
+    cursor:pointer;
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+
+.masonry-item img:hover{
+    transform:scale(1.02);
+}
+
+.band-profile{
+    width:160px;
+    height:160px;
+    margin-top:-80px;
+}
+.carousel-band{
+
+    width:90px;
+    height:90px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:4px solid var(--primary);
+
+    transition:.2s;
+
+    box-shadow:0 8px 18px rgba(0,0,0,.12);
+
+}
+
+.band-link{
+
+    text-decoration:none;
+
+    color:var(--dark);
+
+    text-align:center;
+
+}
+
+.band-link:hover .carousel-band{
+
+    transform:translateY(-4px) scale(1.05);
+
+    box-shadow:0 15px 30px rgba(0,0,0,.18);
+
+}
+.photo-add{
+
+    width:110px;
+    height:110px;
+
+    border:2px dashed #d0d0d0;
+
+    border-radius:16px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    font-size:2rem;
+
+    color:#888;
+
+}
+
+.photo-thumb{
+
+    width:110px;
+
+    height:110px;
+
+    object-fit:cover;
+
+    border-radius:16px;
+
+    display:block;
+
+}
+
+.photo-wrapper{
+
+    position:relative;
+
+    width:110px;
+
+    height:110px;
+
+}
+
+.remove-photo{
+
+    position:absolute;
+
+    top:-8px;
+
+    right:-8px;
+
+    width:24px;
+
+    height:24px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#dc3545;
+
+    color:white;
+
+}

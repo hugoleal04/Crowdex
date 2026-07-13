@@ -2,7 +2,7 @@
 <?php require __DIR__ . '/../Layout/sidebar.php'; ?>
 <?php require __DIR__ . '/../Layout/navbar.php'; ?>
 <?php /** @var array $reviews */ ?>
-<?php /** @var array $upcomingConcerts */?>
+<?php /** @var array $upcomingConcerts */ ?>
 
 <div class="main-content" id="mainContent">
 
@@ -21,8 +21,7 @@
         <div class="cards-grid">
 
             <?php foreach ($upcomingConcerts as $concert): ?>
-
-                <div class="dashboard-card concert-card">
+                <div class="dashboard-card concert-card <?= $concert["Following"] ? "concert-following" : "" ?>">
                     <img
                         src="<?= $concert["BandCoverImage"] ?>"
                         class="concert-cover"

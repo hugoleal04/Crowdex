@@ -102,6 +102,9 @@ die(); */ ?> -->
 
             <div class="results-grid">
                 <?php foreach ($bands as $band) { ?>
+                <a
+                    href="?controller=band&action=profile&id=<?= $band["idBand"] ?>"
+                    class="text-decoration-none text-dark">
                     <div class="result-card">
 
                         <img

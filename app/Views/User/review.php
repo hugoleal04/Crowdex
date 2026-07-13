@@ -1,0 +1,252 @@
+<?php // TODO: Arranjar a validação do tamanho de dados
+require __DIR__ . '/../Layout/header.php'; ?>
+
+<?php require __DIR__ . '/../Layout/sidebar.php'; ?>
+
+<?php require __DIR__ . '/../Layout/navbar.php';
+/* var_dump($_SESSION);
+die; */ ?>
+
+<div class="main-content" id="mainContent">
+
+    <div class="container py-5">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-8">
+
+                <div class="dashboard-card">
+
+                    <div class="card-body p-5">
+
+                        <div class="text-center mb-5">
+
+                            <i
+                                class="bi bi-star-fill"
+                                style="font-size:3rem;color:var(--primary);">
+
+                            </i>
+
+                            <h2 class="mt-3">
+
+                                Write a Review
+
+                            </h2>
+
+                            <p class="text-muted">
+
+                                Share your experience from this concert.
+
+                            </p>
+
+                        </div>
+                        <div class="dashboard-card p-4">
+                            <h3><?= htmlspecialchars($concert["EventTitle"]) ?></h3>
+
+                            <div class="d-flex align-items-center mt-3">
+
+                                <img
+                                    src="<?= htmlspecialchars($concert["BandProfileImage"]) ?>"
+                                    class="rounded-circle me-3"
+                                    style="width:80px;height:80px;object-fit:cover;">
+
+                                <div>
+
+                                    <h5 class="mb-1">
+                                        <?= htmlspecialchars($concert["BandName"]) ?>
+                                    </h5>
+
+                                    <div class="text-muted">
+
+                                        <i class="bi bi-mic-fill"></i>
+                                        <?= htmlspecialchars($concert["Stage"]) ?>
+
+                                        <br>
+
+                                        <i class="bi bi-calendar-event"></i>
+                                        <?= date("d/m/Y H:i", strtotime($concert["StartDateTime"])) ?>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <form
+                            method="POST"
+                            action="?controller=review&action=createReview">
+
+                            <input
+                                type="hidden"
+                                name="concert_id"
+                                value="<?= htmlspecialchars($_GET["concert_id"]) ?>">
+
+                            <input
+                                type="hidden"
+                                id="rating"
+                                name="rating"
+                                value="<?= $review ? $review["Rating"] : 0 ?>">
+
+                            <div class="mb-4">
+                                <br>
+                                <label class="form-label">
+
+                                    Rating
+
+                                </label>
+
+                                <div
+                                    id="star-rating"
+                                    class="fs-2">
+
+                                    <?php for ($i = 1; $i <= 5; $i++): ?>
+
+                                        <i
+                                            class="bi bi-star rating-star"
+                                            data-value="<?= $i ?>">
+
+                                        </i>
+
+                                    <?php endfor; ?>
+
+                                </div>
+
+                            </div>
+
+                            <div class="mb-4">
+
+                                <label class="form-label">
+
+                                    Review
+
+                                </label>
+
+                                <textarea
+                                    class="form-control"
+                                    name="text"
+                                    rows="8"
+                                    placeholder="Tell everyone how the concert was..."><?= $review ? htmlspecialchars($review["Text"]) : "" ?></textarea>
+
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-crowdex">
+
+                                    <i class="bi <?= $review ? "bi-pencil-fill" : "bi-send-fill" ?>"></i>
+
+                                    <?= $review ? "Update Review" : "Publish Review" ?>
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    const stars = document.querySelectorAll(".rating-star");
+
+    const input = document.getElementById("rating");
+
+    const text = document.getElementById("rating-text");
+
+    let selected = <?= $review ? $review["Rating"] : 0 ?>;
+
+    function draw(rating) {
+
+        stars.forEach(star => {
+
+            const value = Number(star.dataset.value);
+
+            star.className = "bi rating-star";
+
+            if (rating >= value) {
+
+                star.classList.add("bi-star-fill");
+
+            } else if (rating >= value - 0.5) {
+
+                star.classList.add("bi-star-half");
+
+            } else {
+
+                star.classList.add("bi-star");
+
+            }
+
+        });
+
+        if (rating === 0) {
+
+            text.textContent = "Select a rating";
+
+        } else {
+
+            text.textContent = rating.toFixed(1) + " ★";
+
+        }
+
+    }
+
+    stars.forEach(star => {
+
+        star.addEventListener("mousemove", e => {
+
+            const rect = star.getBoundingClientRect();
+
+            const x = e.clientX - rect.left;
+
+            const value = Number(star.dataset.value);
+
+            const hoverRating = x < rect.width / 2 ?
+                value - 0.5 :
+                value;
+
+            draw(hoverRating);
+
+        });
+
+        star.addEventListener("click", e => {
+
+            const rect = star.getBoundingClientRect();
+
+            const x = e.clientX - rect.left;
+
+            const value = Number(star.dataset.value);
+
+            selected = x < rect.width / 2 ?
+                value - 0.5 :
+                value;
+
+            input.value = selected;
+
+            draw(selected);
+
+        });
+
+    });
+
+    document.getElementById("star-rating").addEventListener("mouseleave", () => {
+
+        draw(selected);
+
+    });
+    draw(selected);
+    input.value = selected;
+</script>
+
+<?php require __DIR__ . '/../Layout/scripts.php'; ?>

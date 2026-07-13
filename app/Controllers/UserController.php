@@ -3,10 +3,13 @@
 namespace App\Controllers;
 
 use App\Services\MailService;
+use App\Models\Notification;
+use App\Models\Review;
 use PDO;
 use App\Models\User;
 use App\Models\Country;
 use App\Models\Band;
+use App\Models\Concert;
 use App\Models\Event;
 use App\Services\LastFmService;
 
@@ -18,7 +21,12 @@ class UserController
     private Country $countryModel;
     private Band $bandModel;
     private Event $eventModel;
+    private Review $reviewModel;
+    private Concert $concertModel;
 
+
+    private PDO $pdo;
+    private Notification $notificationModel;
 
     public function __construct(PDO $pdo)
     {
@@ -26,6 +34,15 @@ class UserController
         $this->countryModel = new Country($pdo);
         $this->bandModel = new Band($pdo);
         $this->eventModel = new Event($pdo);
+        $this->reviewModel = new Review($pdo);
+        $this->concertModel = new Concert($pdo);
+
+        $this->notificationModel = new Notification($pdo);
+    }
+    private function loadNotifications(): array
+    {
+        return $this->notificationModel
+            ->getNotifications($_SESSION["user_id"]);
     }
     public function logout()
     {
@@ -251,7 +268,7 @@ class UserController
         $relativePath = "uploads/profile_pictures/" . $fileName;
 
         $absolutePath = __DIR__ . "/../../public/" . $relativePath;
-/*         $result = imagewebp($output, $absolutePath, 85);
+        /*         $result = imagewebp($output, $absolutePath, 85);
 
         var_dump($absolutePath);
         var_dump($result);
@@ -288,10 +305,27 @@ class UserController
         );
 
         if (!$user) {
-            die("User not found.");
+            http_response_code(404);
+            require __DIR__ . "/../Views/Errors/404.php";
+            exit;
         }
+        $notifications = $this->loadNotifications();
 
         require __DIR__ . "/../Views/User/profile.php";
+    }
+    public function deleteNotification()
+    {
+        $id = (int)($_POST["idNotification"] ?? 0);
+
+        $success = $this->notificationModel->deleteNotification($id);
+
+        header("Content-Type: application/json");
+
+        echo json_encode([
+            "success" => $success
+        ]);
+
+        exit;
     }
     public function login()
     {
@@ -304,7 +338,9 @@ class UserController
             header("Location: ?controller=user&action=login");
             exit;
         }
-
+        $notifications = $this->loadNotifications();
+        $upcomingConcerts = $this->concertModel->getUpcomingConcertsByUserCountry($_SESSION["user_id"]);
+        $reviews = $this->reviewModel->getReviewsFromFollowing($_SESSION["user_id"]);
         require __DIR__ . "/../Views/User/mainmenu.php";
     }
     public function search()
@@ -313,6 +349,7 @@ class UserController
             header("Location: ?controller=user&action=login");
             exit;
         }
+        $notifications = $this->loadNotifications();
 
         $query = trim($_GET["query"] ?? "");
 
@@ -343,6 +380,8 @@ class UserController
             header("Location: ?controller=user&action=login");
             exit;
         }
+        $notifications = $this->loadNotifications();
+
         require __DIR__ . "/../Views/User/settings.php";
     }
 }

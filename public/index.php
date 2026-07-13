@@ -10,6 +10,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Dotenv\Dotenv;
 use App\Controllers\UserController;
+use App\Controllers\ReviewController;
+use App\Controllers\ConcertController;
 use App\Models\User;
 
 $dotenv = Dotenv::createImmutable(__DIR__ . "/..");
@@ -21,14 +23,17 @@ if (!isset($_SESSION["user_id"]) && isset($_COOKIE["remember_token"])) {
 
     $userModel = new User($pdo);
     $user = $userModel->findByRememberToken($_COOKIE["remember_token"]);
-    if ($user) {
 
+    if ($user) {
         $_SESSION["user_id"] = $user["idUser"];
         $_SESSION["username"] = $user["Username"];
+        $_SESSION["name"] = $user["Name"];
+        $_SESSION["email"] = $user["Email"];
+        $_SESSION["pfp"] = $user["PFP"];
     }
 }
 
-$controllerName = $_GET["controller"] ?? "auth";
+$controllerName = $_GET["controller"] ?? "user";
 $action = $_GET["action"] ?? "login";
 
 switch ($controllerName) {
@@ -37,12 +42,38 @@ switch ($controllerName) {
         $controller = new UserController($pdo);
         break;
 
+    case "review":
+        $controller = new ReviewController($pdo);
+        break;
+
+    case "concert":
+        $controller = new ConcertController($pdo);
+        break;
+
     default:
-        die("Controller não encontrado.");
+        http_response_code(404);
+        require __DIR__ . "/../app/Views/Errors/404.php";
+        exit;
 }
 
 if (!method_exists($controller, $action)) {
-    die("Action não encontrada.");
+
+    http_response_code(404);
+    require __DIR__ . "/../app/Views/Errors/404.php";
+    exit;
 }
 
-$controller->$action();
+try {
+
+    $controller->$action();
+
+} catch (\Throwable $e) {
+
+    echo "<pre>";
+    echo "Message: " . $e->getMessage() . PHP_EOL;
+    echo "File: " . $e->getFile() . PHP_EOL;
+    echo "Line: " . $e->getLine() . PHP_EOL;
+    echo PHP_EOL;
+    echo $e->getTraceAsString();
+    exit;
+}

@@ -1,65 +1,54 @@
 <?php require __DIR__ . '/../Layout/header.php'; ?>
 <?php require __DIR__ . '/../Layout/sidebar.php'; ?>
 <?php require __DIR__ . '/../Layout/navbar.php'; ?>
+<?php /** @var array $reviews */ ?>
+<?php /** @var array $upcomingConcerts */?>
+
 <div class="main-content" id="mainContent">
 
-    <div class="container-fluid ">
-        <!-- UPCOMING CONCERTS -->
-        <div class="section">
+    <!-- UPCOMING CONCERTS -->
 
-            <div class="section-header">
+    <div class="section">
 
-                <h4>Upcoming Concerts</h4>
+        <div class="section-header">
 
-                <a href="#">View all</a>
+            <h4>Upcoming Concerts</h4>
 
-            </div>
+            <a href="#">View all</a>
 
-            <div class="cards-grid">
+        </div>
+
+        <div class="cards-grid">
+
+            <?php foreach ($upcomingConcerts as $concert): ?>
 
                 <div class="dashboard-card concert-card">
-
-                    <div class="card-image"></div>
+                    <img
+                        src="<?= $concert["BandCoverImage"] ?>"
+                        class="concert-cover"
+                        alt="<?= htmlspecialchars($concert["BandName"]) ?>">
 
                     <div class="card-body">
 
-                        <h5>Coldplay</h5>
+                        <h5>
+                            <?= htmlspecialchars($concert["BandName"]) ?>
+                        </h5>
 
-                        <p>Lisbon • 21 Aug 2026</p>
+                        <p>
+
+                            <?= htmlspecialchars($concert["VenueName"]) ?>
+
+                            •
+
+                            <?= date("d M Y", strtotime($concert["StartDateTime"])) ?>
+
+                        </p>
 
                     </div>
 
                 </div>
 
-                <div class="dashboard-card concert-card">
-
-                    <div class="card-image"></div>
-
-                    <div class="card-body">
-
-                        <h5>Bring Me The Horizon</h5>
-
-                        <p>Madrid • 4 Sep 2026</p>
-
-                    </div>
-
-                </div>
-
-                <div class="dashboard-card concert-card">
-
-                    <div class="card-image"></div>
-
-                    <div class="card-body">
-
-                        <h5>Sleep Token</h5>
-
-                        <p>London • 18 Sep 2026</p>
-
-                    </div>
-
-                </div>
-
-            </div>
+            <?php endforeach; ?>
 
         </div>
 
@@ -69,51 +58,89 @@
 
             <div class="section-header">
 
-                <h4>Friends Activity</h4>
-
-                <a href="#">See more</a>
-
+                <h4>Recent Reviews</h4>
             </div>
 
-            <div class="activity-card">
+            <div class="reviews-carousel">
 
-                <div class="activity-avatar">
+                <?php foreach ($reviews as $review): ?>
 
-                    H
+                    <div class="dashboard-card review-card">
 
-                </div>
 
-                <div>
+                        <div class="d-flex align-items-center mb-3">
 
-                    <strong>Hugo</strong>
+                            <img
+                                src="<?= htmlspecialchars($review["PFP"]) ?>"
+                                class="rounded-circle me-2"
+                                style="width:48px;height:48px;object-fit:cover;">
 
-                    reviewed
+                            <div>
 
-                    <strong>Coldplay</strong>
+                                <strong>
+                                    <?= htmlspecialchars($review["Username"]) ?>
+                                </strong>
 
-                    ★★★★★
+                                <br>
 
-                </div>
+                                <small class="text-muted">
+                                    <?= date("d M Y", strtotime($review["CreatedAt"])) ?>
+                                </small>
 
-            </div>
+                            </div>
 
-            <div class="activity-card">
+                        </div>
 
-                <div class="activity-avatar">
+                        <div class="d-flex align-items-center mb-2 review-concert">
 
-                    J
+                            <img
+                                src="<?= htmlspecialchars($review["BandProfileImage"]) ?>"
+                                class="rounded-circle me-2"
+                                style="width:32px;height:32px;object-fit:cover;">
 
-                </div>
+                            <div>
 
-                <div>
+                                <strong>
+                                    <?= htmlspecialchars($review["BandName"]) ?>
+                                </strong>
 
-                    <strong>João</strong>
+                                <br>
 
-                    is attending
+                                <small class="text-muted review-event">
+                                    <?= htmlspecialchars($review["EventTitle"]) ?>
+                                </small>
 
-                    <strong>NOS Alive</strong>
+                            </div>
 
-                </div>
+                        </div>
+
+                        <div class="mb-2">
+
+                            <?php
+                            for ($i = 1; $i <= 5; $i++) {
+
+                                if ($review["Rating"] >= $i) {
+
+                                    echo '<i class="bi bi-star-fill"></i>';
+                                } elseif ($review["Rating"] >= $i - 0.5) {
+
+                                    echo '<i class="bi bi-star-half"></i>';
+                                } else {
+
+                                    echo '<i class="bi bi-star"></i>';
+                                }
+                            }
+                            ?>
+
+                        </div>
+
+                        <p class="review-text small text-muted">
+                            <?= htmlspecialchars($review["Text"]) ?>
+                        </p>
+
+                    </div>
+
+                <?php endforeach; ?>
 
             </div>
 

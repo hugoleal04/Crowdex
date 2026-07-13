@@ -23,6 +23,20 @@ class Band
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function getBandById(int $id): array|false
+    {
+        $stmt = $this->pdo->prepare("
+        SELECT *
+        FROM Band
+        WHERE idBand = :id
+    ");
+
+        $stmt->execute([
+            "id" => $id
+        ]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
     public function getGenres(int $bandId): array
     {
         $stmt = $this->pdo->prepare("

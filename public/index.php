@@ -12,6 +12,7 @@ use Dotenv\Dotenv;
 use App\Controllers\UserController;
 use App\Controllers\ReviewController;
 use App\Controllers\ConcertController;
+use App\Controllers\BandController;
 use App\Models\User;
 
 $dotenv = Dotenv::createImmutable(__DIR__ . "/..");
@@ -49,6 +50,9 @@ switch ($controllerName) {
     case "concert":
         $controller = new ConcertController($pdo);
         break;
+    case "band":
+        $controller = new BandController($pdo);
+        break;
 
     default:
         http_response_code(404);
@@ -66,7 +70,6 @@ if (!method_exists($controller, $action)) {
 try {
 
     $controller->$action();
-
 } catch (\Throwable $e) {
 
     echo "<pre>";

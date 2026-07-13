@@ -114,4 +114,41 @@ SELECT
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function getConcertsByBand(int $idBand, bool $upcoming = true): array
+    {
+        $operator = $upcoming ? ">" : "<";
+
+        $stmt = $this->pdo->prepare("
+        SELECT
+            Concert.idConcert,
+            Concert.Stage,
+            Concert.StartDateTime,
+
+            Event.Title AS EventTitle,
+            Event.BannerImage,
+
+            Venue.Name AS VenueName,
+            City.Name AS CityName
+
+        FROM Concert
+
+        INNER JOIN Event
+            ON Event.idEvent = Concert.Event_idEvent
+
+        INNER JOIN Venue
+            ON Venue.idVenue = Event.Venue_idVenue
+
+        INNER JOIN City
+            ON City.idCity = Venue.City_idCity
+
+        WHERE Concert.Band_idBand = ?
+          AND Concert.StartDateTime {$operator} NOW()
+
+        ORDER BY Concert.StartDateTime
+    ");
+
+        $stmt->execute([$idBand]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

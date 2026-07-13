@@ -16,6 +16,8 @@ class ConcertController
     private Concert $ConcertModel;
     private Review $reviewModel;
     private Notification $notificationModel;
+    private PDO $pdo;
+
     public function __construct(PDO $pdo)
     {
         $this->userModel = new User($pdo);

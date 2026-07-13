@@ -9,6 +9,7 @@ use PDO;
 use App\Models\User;
 use App\Models\Country;
 use App\Models\Band;
+use App\Models\Concert;
 use App\Models\Event;
 use App\Services\LastFmService;
 
@@ -21,6 +22,8 @@ class UserController
     private Band $bandModel;
     private Event $eventModel;
     private Review $reviewModel;
+    private Concert $concertModel;
+
 
     private PDO $pdo;
     private Notification $notificationModel;
@@ -32,7 +35,7 @@ class UserController
         $this->bandModel = new Band($pdo);
         $this->eventModel = new Event($pdo);
         $this->reviewModel = new Review($pdo);
-
+        $this->concertModel = new Concert($pdo);
 
         $this->notificationModel = new Notification($pdo);
     }
@@ -336,6 +339,7 @@ class UserController
             exit;
         }
         $notifications = $this->loadNotifications();
+        $upcomingConcerts = $this->concertModel->getUpcomingConcertsByUserCountry($_SESSION["user_id"]);
         $reviews = $this->reviewModel->getReviewsFromFollowing($_SESSION["user_id"]);
         require __DIR__ . "/../Views/User/mainmenu.php";
     }

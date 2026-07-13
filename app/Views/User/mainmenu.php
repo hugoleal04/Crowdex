@@ -2,66 +2,53 @@
 <?php require __DIR__ . '/../Layout/sidebar.php'; ?>
 <?php require __DIR__ . '/../Layout/navbar.php'; ?>
 <?php /** @var array $reviews */ ?>
+<?php /** @var array $upcomingConcerts */?>
 
 <div class="main-content" id="mainContent">
 
-    <div class="container-fluid ">
-        <!-- UPCOMING CONCERTS -->
-        <div class="section">
+    <!-- UPCOMING CONCERTS -->
 
-            <div class="section-header">
+    <div class="section">
 
-                <h4>Upcoming Concerts</h4>
+        <div class="section-header">
 
-                <a href="#">View all</a>
+            <h4>Upcoming Concerts</h4>
 
-            </div>
+            <a href="#">View all</a>
 
-            <div class="cards-grid">
+        </div>
+
+        <div class="cards-grid">
+
+            <?php foreach ($upcomingConcerts as $concert): ?>
 
                 <div class="dashboard-card concert-card">
-
-                    <div class="card-image"></div>
+                    <img
+                        src="<?= $concert["BandCoverImage"] ?>"
+                        class="concert-cover"
+                        alt="<?= htmlspecialchars($concert["BandName"]) ?>">
 
                     <div class="card-body">
 
-                        <h5>Coldplay</h5>
+                        <h5>
+                            <?= htmlspecialchars($concert["BandName"]) ?>
+                        </h5>
 
-                        <p>Lisbon • 21 Aug 2026</p>
+                        <p>
+
+                            <?= htmlspecialchars($concert["VenueName"]) ?>
+
+                            •
+
+                            <?= date("d M Y", strtotime($concert["StartDateTime"])) ?>
+
+                        </p>
 
                     </div>
 
                 </div>
 
-                <div class="dashboard-card concert-card">
-
-                    <div class="card-image"></div>
-
-                    <div class="card-body">
-
-                        <h5>Bring Me The Horizon</h5>
-
-                        <p>Madrid • 4 Sep 2026</p>
-
-                    </div>
-
-                </div>
-
-                <div class="dashboard-card concert-card">
-
-                    <div class="card-image"></div>
-
-                    <div class="card-body">
-
-                        <h5>Sleep Token</h5>
-
-                        <p>London • 18 Sep 2026</p>
-
-                    </div>
-
-                </div>
-
-            </div>
+            <?php endforeach; ?>
 
         </div>
 

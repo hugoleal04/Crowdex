@@ -99,7 +99,6 @@ INSERT INTO Band
 (
     Name,
     Description,
-    CoverImage,
     FormedYear,
     DisbandYear,
     Verified,
@@ -117,7 +116,6 @@ VALUES
 (
 'Coldplay',
 'British rock band formed in London, known for stadium anthems and melodic alternative rock.',
-NULL,
 1997,
 NULL,
 1,
@@ -134,7 +132,6 @@ NOW()
 (
 'Bring Me The Horizon',
 'British rock band blending metalcore, alternative rock and electronic music.',
-NULL,
 2004,
 NULL,
 1,
@@ -151,7 +148,6 @@ NOW()
 (
 'Sleep Token',
 'Anonymous British rock band mixing progressive metal, ambient and R&B influences.',
-NULL,
 2016,
 NULL,
 1,
@@ -168,7 +164,6 @@ NOW()
 (
 'Linkin Park',
 'American rock band known for combining alternative rock, nu metal and electronic music.',
-NULL,
 1996,
 NULL,
 1,
@@ -185,7 +180,6 @@ NOW()
 (
 'Architects',
 'British metalcore band recognized for technical musicianship and modern metal sound.',
-NULL,
 2004,
 NULL,
 1,
@@ -202,7 +196,6 @@ NOW()
 (
 'Ghost',
 'Swedish rock band famous for theatrical performances and occult-inspired imagery.',
-NULL,
 2006,
 NULL,
 1,
@@ -219,7 +212,6 @@ NOW()
 (
 'Imagine Dragons',
 'American pop rock band from Las Vegas known for arena rock hits.',
-NULL,
 2008,
 NULL,
 1,
@@ -236,7 +228,6 @@ NOW()
 (
 'Metallica',
 'American heavy metal band regarded as one of the most influential metal bands of all time.',
-NULL,
 1981,
 NULL,
 1,
@@ -253,7 +244,6 @@ NOW()
 (
 'Slipknot',
 'American heavy metal band known for aggressive music and distinctive masks.',
-NULL,
 1995,
 NULL,
 1,
@@ -270,7 +260,6 @@ NOW()
 (
 'Foo Fighters',
 'American rock band founded by Dave Grohl after the dissolution of Nirvana.',
-NULL,
 1994,
 NULL,
 1,
@@ -287,7 +276,6 @@ NOW()
 (
 'Green Day',
 'American punk rock band formed in California and pioneers of modern pop punk.',
-NULL,
 1987,
 NULL,
 1,
@@ -304,7 +292,6 @@ NOW()
 (
 'Muse',
 'English rock band known for progressive rock, electronic influences and spectacular live shows.',
-NULL,
 1994,
 NULL,
 1,
@@ -321,7 +308,6 @@ NOW()
 (
 'Twenty One Pilots',
 'American musical duo blending alternative rock, hip hop and electronic music.',
-NULL,
 2009,
 NULL,
 1,
@@ -338,7 +324,6 @@ NOW()
 (
 'The Killers',
 'American rock band from Las Vegas famous for indie rock and alternative anthems.',
-NULL,
 2001,
 NULL,
 1,
@@ -355,7 +340,6 @@ NOW()
 (
 'Royal Blood',
 'English rock duo known for their heavy bass-driven sound.',
-NULL,
 2011,
 NULL,
 1,
@@ -372,7 +356,6 @@ NOW()
 (
 'Arctic Monkeys',
 'English indie rock band formed in Sheffield.',
-NULL,
 2002,
 NULL,
 1,
@@ -389,7 +372,6 @@ NOW()
 (
 'Rammstein',
 'German industrial metal band famous for theatrical live shows.',
-NULL,
 1994,
 NULL,
 1,
@@ -406,7 +388,6 @@ NOW()
 (
 'Iron Maiden',
 'English heavy metal band formed in London.',
-NULL,
 1975,
 NULL,
 1,
@@ -423,7 +404,6 @@ NOW()
 (
 'System Of A Down',
 'Armenian-American alternative metal band.',
-NULL,
 1994,
 NULL,
 1,
@@ -440,7 +420,6 @@ NOW()
 (
 'Red Hot Chili Peppers',
 'American funk rock band.',
-NULL,
 1982,
 NULL,
 1,
@@ -457,7 +436,6 @@ NOW()
 (
 'Billie Eilish',
 'American singer-songwriter.',
-NULL,
 2015,
 NULL,
 1,
@@ -474,7 +452,6 @@ NOW()
 (
 'Olivia Rodrigo',
 'American singer-songwriter and actress.',
-NULL,
 2021,
 NULL,
 1,
@@ -491,7 +468,6 @@ NOW()
 (
 'The Weeknd',
 'Canadian singer, songwriter and producer.',
-NULL,
 2010,
 NULL,
 1,
@@ -508,7 +484,6 @@ NOW()
 (
 'Bad Omens',
 'American metalcore band.',
-NULL,
 2015,
 NULL,
 1,
@@ -525,7 +500,6 @@ NOW()
 (
 'Spiritbox',
 'Canadian progressive metalcore band.',
-NULL,
 2017,
 NULL,
 1,
@@ -542,7 +516,6 @@ NOW()
 (
 'Sabaton',
 'Swedish power metal band.',
-NULL,
 1999,
 NULL,
 1,

@@ -40,7 +40,6 @@ class ConcertController
 
         exit;
     }
-    function createConcert() {}
     public function getConcertById()
     {
         $concert = $this->ConcertModel

@@ -16,48 +16,23 @@ class Concert
     {
 
         $stmt = $this->pdo->prepare("
-SELECT
-            Concert.idConcert,
-            Concert.Stage,
-            Concert.StartDateTime,
-
-            Band.Name AS BandName,
-            Band.ProfileImage AS BandProfileImage,
-	    Band.CoverImage AS BandCoverImage,
-
-
-            Event.Title AS EventTitle,
-
-            Venue.Name AS VenueName,
-            City.Name AS CityName
-
-        FROM Concert
-
-        INNER JOIN Band
-            ON Band.idBand = Concert.Band_idBand
-
-        INNER JOIN Event
-            ON Event.idEvent = Concert.Event_idEvent
-
-        INNER JOIN Venue
-            ON Venue.idVenue = Event.Venue_idVenue
-
-        INNER JOIN City
-            ON City.idCity = Venue.City_idCity
-
-        WHERE
-            Concert.StartDateTime > NOW()
-
-            AND City.Country_idCountry = (
-                SELECT Country_idCountry
-                FROM User
-                WHERE idUser = ?
-            )
-
-        ORDER BY Concert.StartDateTime ASC
-
-        LIMIT ?;
-    ");
+        SELECT 
+            Concert.idConcert, 
+            Concert.Stage, 
+            Concert.StartDateTime, 
+            Band.Name AS BandName, 
+            Band.ProfileImage AS BandProfileImage, 
+            Band.CoverImage AS BandCoverImage, 
+            Event.Title AS EventTitle, 
+            Venue.Name AS VenueName, 
+            City.Name AS CityName 
+        FROM Concert 
+            INNER JOIN Band ON Band.idBand = Concert.Band_idBand 
+            INNER JOIN Event ON Event.idEvent = Concert.Event_idEvent 
+            INNER JOIN Venue ON Venue.idVenue = Event.Venue_idVenue 
+            INNER JOIN City ON City.idCity = Venue.City_idCity 
+        WHERE Concert.StartDateTime > NOW() AND City.Country_idCountry = (SELECT Country_idCountry FROM User WHERE idUser = ?) 
+        ORDER BY Concert.StartDateTime ASC LIMIT ?; ");
 
         $stmt->execute([$id]);
 
@@ -71,13 +46,22 @@ SELECT
             Concert.Stage,
             Concert.StartDateTime,
 
+            Band.idBand,
             Band.Name AS BandName,
             Band.ProfileImage AS BandProfileImage,
+            Band.CoverImage AS BandCoverImage,
 
             Event.Title AS EventTitle,
 
             Venue.Name AS VenueName,
-            City.Name AS CityName
+            City.Name AS CityName,
+
+            EXISTS(
+                SELECT 1
+                FROM Follow_Band fb
+                WHERE fb.idUser = :userId
+                AND fb.idBand = Band.idBand
+            ) AS Following
 
         FROM Concert
 
@@ -96,19 +80,29 @@ SELECT
         WHERE
             Concert.StartDateTime > NOW()
 
-            AND City.Country_idCountry = (
-                SELECT Country_idCountry
-                FROM User
-                WHERE idUser = ?
+            AND
+            (
+                City.Country_idCountry = (
+                    SELECT Country_idCountry
+                    FROM User
+                    WHERE idUser = :userId
+                )
+
+                OR EXISTS(
+                    SELECT 1
+                    FROM Follow_Band fb
+                    WHERE fb.idUser = :userId
+                    AND fb.idBand = Band.idBand
+                )
             )
 
         ORDER BY Concert.StartDateTime ASC
 
-        LIMIT ?
+        LIMIT :limit
     ");
 
-        $stmt->bindValue(1, $userId, PDO::PARAM_INT);
-        $stmt->bindValue(2, $limit, PDO::PARAM_INT);
+        $stmt->bindValue(":userId", $userId, PDO::PARAM_INT);
+        $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
 
         $stmt->execute();
 

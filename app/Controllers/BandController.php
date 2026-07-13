@@ -35,9 +35,11 @@ class BandController
         }
 
         $id = (int)($_GET["id"] ?? 0);
-
-        $band = $this->bandModel->getBandById($id);
-
+        $followers = $this->bandModel->getFollowersCount($id);
+        $band = $this->bandModel->getBandById(
+            $id,
+            $_SESSION["user_id"]
+        );
         if (!$band) {
             die("Band not found.");
         }
@@ -49,5 +51,27 @@ class BandController
         $notifications = $this->notificationModel->getNotifications($_SESSION["user_id"]);
 
         require __DIR__ . "/../Views/Band/profile.php";
+    }
+
+
+    public function followUnfollow()
+    {
+        $id = $_SESSION["user_id"];
+
+        $this->bandModel->follow(
+            $id,
+            (int)$_POST["idFollow"],
+            (int)$_POST["Request"]
+        );
+
+        if ($_POST["redirect"] === "search") {
+
+            header("Location: ?controller=band&action=search&query=" . urlencode($_POST["query"]));
+        } else {
+
+            header("Location: ?controller=band&action=profile&id=" . (int)$_POST["idFollow"]);
+        }
+
+        exit;
     }
 }

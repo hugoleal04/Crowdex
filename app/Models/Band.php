@@ -23,16 +23,27 @@ class Band
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function getBandById(int $id): array|false
+    public function getBandById(int $idBand, int $idUser): array|false
     {
         $stmt = $this->pdo->prepare("
-        SELECT *
+        SELECT
+            Band.*,
+
+            EXISTS(
+                SELECT 1
+                FROM Follow_Band
+                WHERE idBand = Band.idBand
+                  AND idUser = :user
+            ) AS Following
+
         FROM Band
-        WHERE idBand = :id
+
+        WHERE idBand = :band
     ");
 
         $stmt->execute([
-            "id" => $id
+            "band" => $idBand,
+            "user" => $idUser
         ]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -52,5 +63,38 @@ class Band
         ]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function follow(int $id, int $idFollow, bool $request)
+    {
+        if ($request) {
+            $stmt = $this->pdo->prepare("
+            insert into Follow_Band
+            (
+                idUser,
+                idBand
+            )
+            Values
+            (:id,:idFollow)");
+        } else {
+            $stmt = $this->pdo->prepare("
+            DELETE FROM Follow_Band WHERE idUser=:id AND idBand=:idFollow;");
+        }
+        return $stmt->execute([
+            ":id" => $id,
+            ":idFollow" => $idFollow
+        ]);
+    }
+    public function getFollowersCount(int $idBand): int
+    {
+        $stmt = $this->pdo->prepare("
+        SELECT COUNT(*)
+        FROM Follow_Band
+        WHERE idBand = ?
+    ");
+
+        $stmt->execute([$idBand]);
+
+        return (int)$stmt->fetchColumn();
     }
 }

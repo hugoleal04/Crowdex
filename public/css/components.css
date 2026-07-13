@@ -775,3 +775,26 @@ a {
     text-overflow: ellipsis;
 
 }
+
+.concert-following{
+
+    border:3px solid var(--secondary);
+
+    box-shadow:0 0 0 4px rgba(68,115,50,.18);
+
+}
+
+.concert-cover{
+
+    width:100%;
+    aspect-ratio:16/9;
+
+    object-fit:cover;
+
+    object-position:center;
+
+    border-radius:22px 22px 0 0;
+
+    display:block;
+
+}

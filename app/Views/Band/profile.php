@@ -34,23 +34,46 @@
 
                     </p>
 
-                    <button class="btn btn-crowdex w-100 mb-4">
+                    <form method="POST" action="?controller=band&action=followUnfollow">
 
-                        <i class="bi bi-person-plus-fill"></i>
+                        <input type="hidden" name="redirect" value="profile">
+                        <input
+                            type="hidden"
+                            name="idFollow"
+                            value="<?= $band["idBand"] ?>">
 
-                        Follow
+                        <input
+                            type="hidden"
+                            name="Request"
+                            value="<?= $band["Following"] ? 0 : 1 ?>">
 
-                    </button>
+                        <button
+                            type="submit"
+                            class="btn <?= $band["Following"] ? "btn-outline-secondary" : "btn-crowdex" ?> w-100 mb-4">
+
+                            <?php if ($band["Following"]): ?>
+
+                                <i class="bi bi-check-lg"></i>
+
+                                Following
+
+                            <?php else: ?>
+
+                                <i class="bi bi-person-plus-fill"></i>
+
+                                Follow
+
+                            <?php endif; ?>
+
+                        </button>
+
+                    </form>
 
                     <div class="row text-center">
 
                         <div class="col-4">
 
-                            <h3 class="mb-0">
-
-                                0
-
-                            </h3>
+                            <h3><?= $followers ?></h3>
 
                             <small class="text-muted">
 

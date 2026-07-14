@@ -21,11 +21,8 @@ class ConcertController
     public function __construct(PDO $pdo)
     {
         $this->userModel = new User($pdo);
-
         $this->ConcertModel = new Concert($pdo);
-
         $this->reviewModel = new Review($pdo);
-
         $this->notificationModel = new Notification($pdo);
     }
     public function deleteNotification()
@@ -68,7 +65,17 @@ class ConcertController
             header("Location: ?controller=user&action=login");
             exit;
         }
-        $notifications = $this->loadNotifications();
+        $idConcert = (int)($_GET["id"] ?? 0);
+        $concert = $this->ConcertModel->getConcertById($idConcert);
+        if ($concert === false) {
+            http_response_code(404);
+            require __DIR__ . "/../Views/Errors/404.php";
+            exit;
+        }
+        $gallery = $this->ConcertModel->getConcertGallery($idConcert);
+        $reviews = $this->reviewModel->getReviewsByConcert($idConcert);
+        $notifications = $this->notificationModel
+            ->getNotifications($_SESSION["user_id"]);
         require __DIR__ . "/../Views/Concert/profile.php";
     }
 }

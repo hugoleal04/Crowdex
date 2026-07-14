@@ -307,6 +307,34 @@ class Review
             }
         }
     }
+    public function getReviewsByConcert(int $idConcert): array
+    {
+        $stmt = $this->pdo->prepare("
+        SELECT
+            r.idReview,
+            r.Rating,
+            r.Text,
+            r.CreatedAt,
+
+            u.idUser,
+            u.Username,
+            u.Name,
+            u.PFP
+
+        FROM Review r
+
+        INNER JOIN User u
+            ON r.User_idUser = u.idUser
+
+        WHERE r.Concert_idConcert = ?
+
+        ORDER BY r.CreatedAt DESC
+    ");
+
+        $stmt->execute([$idConcert]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function getReviewByUserAndConcert(int $idUser, int $idConcert): array|false
     {
         $stmt = $this->pdo->prepare("

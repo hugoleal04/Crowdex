@@ -14,7 +14,17 @@
 
     height: 48px;
 
-    font-weight: 600;
+    padding: 0 24px;
+
+    font-weight: 700;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
 
     transition: .25s;
 
@@ -716,15 +726,16 @@ a {
     transform: translateY(-4px);
 
 }
-.review-event{
 
-    display:-webkit-box;
-    -webkit-box-orient:vertical;
-    -webkit-line-clamp:2;
+.review-event {
 
-    overflow:hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 
-    line-height:1.3;
+    overflow: hidden;
+
+    line-height: 1.3;
 }
 
 .reviews-carousel {
@@ -737,11 +748,13 @@ a {
     padding: 5px 0 15px;
     scroll-behavior: smooth;
 }
-.review-concert{
+
+.review-concert {
 
     min-height: 70px;
 
 }
+
 .review-card {
     flex: 0 0 330px;
 
@@ -776,26 +789,26 @@ a {
 
 }
 
-.concert-following{
+.concert-following {
 
-    border:3px solid var(--secondary);
+    border: 3px solid var(--secondary);
 
-    box-shadow:0 0 0 4px rgba(68,115,50,.18);
+    box-shadow: 0 0 0 4px rgba(68, 115, 50, .18);
 
 }
 
-.concert-cover{
+.concert-cover {
 
-    width:100%;
-    aspect-ratio:16/9;
+    width: 100%;
+    aspect-ratio: 16/9;
 
-    object-fit:cover;
+    object-fit: cover;
 
-    object-position:center;
+    object-position: center;
 
-    border-radius:22px 22px 0 0;
+    border-radius: 22px 22px 0 0;
 
-    display:block;
+    display: block;
 
 }
 
@@ -804,134 +817,335 @@ a {
         MASONRY GALLERY
 =========================== */
 
-.masonry-gallery{
+.masonry-gallery {
     columns: 4 250px;
     column-gap: 18px;
 }
 
-.masonry-item{
+.masonry-item {
     break-inside: avoid;
     margin-bottom: 18px;
 }
 
-.masonry-item img{
-    width:100%;
-    border-radius:18px;
-    display:block;
-    object-fit:cover;
-    transition:.2s;
-    cursor:pointer;
-    box-shadow:0 10px 25px rgba(0,0,0,.12);
+.masonry-item img {
+    width: 100%;
+    border-radius: 18px;
+    display: block;
+    object-fit: cover;
+    transition: .2s;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .12);
 }
 
-.masonry-item img:hover{
-    transform:scale(1.02);
+.masonry-item img:hover {
+    transform: scale(1.02);
 }
 
-.band-profile{
-    width:160px;
-    height:160px;
-    margin-top:-80px;
-}
-.carousel-band{
-
-    width:90px;
-    height:90px;
-
-    border-radius:50%;
-
-    object-fit:cover;
-
-    border:4px solid var(--primary);
-
-    transition:.2s;
-
-    box-shadow:0 8px 18px rgba(0,0,0,.12);
-
+.band-profile {
+    width: 160px;
+    height: 160px;
+    margin-top: -80px;
 }
 
-.band-link{
+.carousel-band {
 
-    text-decoration:none;
+    width: 90px;
+    height: 90px;
 
-    color:var(--dark);
+    border-radius: 50%;
 
-    text-align:center;
+    object-fit: cover;
+
+    border: 4px solid var(--primary);
+
+    transition: .2s;
+
+    box-shadow: 0 8px 18px rgba(0, 0, 0, .12);
 
 }
 
-.band-link:hover .carousel-band{
+.band-link {
 
-    transform:translateY(-4px) scale(1.05);
+    text-decoration: none;
 
-    box-shadow:0 15px 30px rgba(0,0,0,.18);
+    color: var(--dark);
 
-}
-.photo-add{
-
-    width:110px;
-    height:110px;
-
-    border:2px dashed #d0d0d0;
-
-    border-radius:16px;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    cursor:pointer;
-
-    font-size:2rem;
-
-    color:#888;
+    text-align: center;
 
 }
 
-.photo-thumb{
+.band-link:hover .carousel-band {
 
-    width:110px;
+    transform: translateY(-4px) scale(1.05);
 
-    height:110px;
-
-    object-fit:cover;
-
-    border-radius:16px;
-
-    display:block;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, .18);
 
 }
 
-.photo-wrapper{
+.photo-add {
 
-    position:relative;
+    width: 110px;
+    height: 110px;
 
-    width:110px;
+    border: 2px dashed #d0d0d0;
 
-    height:110px;
+    border-radius: 16px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    cursor: pointer;
+
+    font-size: 2rem;
+
+    color: #888;
 
 }
 
-.remove-photo{
+.photo-thumb {
 
-    position:absolute;
+    width: 110px;
 
-    top:-8px;
+    height: 110px;
 
-    right:-8px;
+    object-fit: cover;
 
-    width:24px;
+    border-radius: 16px;
 
-    height:24px;
+    display: block;
 
-    border:none;
+}
 
-    border-radius:50%;
+.photo-wrapper {
 
-    background:#dc3545;
+    position: relative;
 
-    color:white;
+    width: 110px;
+
+    height: 110px;
+
+}
+
+.remove-photo {
+
+    position: absolute;
+
+    top: -8px;
+
+    right: -8px;
+
+    width: 24px;
+
+    height: 24px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #dc3545;
+
+    color: white;
+
+}
+
+.gallery-image,
+.gallery-video video {
+
+    width: 100%;
+
+    display: block;
+
+    border-radius: 16px;
+
+    transition: .25s;
+
+}
+
+.gallery-video {
+
+    position: relative;
+
+}
+
+.gallery-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 3rem;
+
+    color: white;
+
+    background: rgba(0, 0, 0, .25);
+
+    opacity: 0;
+
+    transition: .25s;
+
+}
+
+.masonry-item {
+
+    overflow: hidden;
+
+    border-radius: 16px;
+
+    cursor: pointer;
+
+}
+
+.masonry-item:hover img,
+.masonry-item:hover video {
+
+    transform: scale(1.04);
+
+}
+
+.masonry-item:hover .gallery-overlay {
+
+    opacity: 1;
+
+}
+
+.review-card {
+
+    transition: .2s;
+
+    padding-bottom: 1rem;
+
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+
+}
+
+.review-card:last-child {
+
+    border-bottom: none;
+
+}
+
+.review-card:hover {
+
+    transform: translateY(-2px);
+
+}
+
+.dashboard-card img {
+
+    user-select: none;
+
+}
+
+/* ===========================
+    OTHER CONCERTS
+=========================== */
+
+.other-concert {
+
+    display: flex;
+
+    gap: 16px;
+
+    align-items: center;
+
+    padding: 14px;
+
+    margin-bottom: 14px;
+
+    border-radius: 18px;
+
+    transition: .2s;
+
+    color: inherit;
+
+    border: 2px solid transparent;
+
+}
+
+.other-concert:last-child {
+
+    margin-bottom: 0;
+
+}
+
+.other-concert:hover {
+
+    background: #fafafa;
+
+    border-color: var(--primary);
+
+    transform: translateX(5px);
+
+}
+
+.other-concert-image {
+
+    width: 70px;
+
+    height: 70px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 3px solid var(--primary);
+
+    flex-shrink: 0;
+
+}
+
+.other-concert-info {
+
+    flex: 1;
+
+}
+
+.other-concert-info h6 {
+
+    margin-bottom: 6px;
+
+    font-weight: 700;
+
+    color: var(--dark);
+
+}
+
+.other-concert-info small {
+
+    color: #666;
+
+    display: block;
+
+}
+
+.other-concert .bi-star-fill,
+.other-concert .bi-star-half,
+.other-concert .bi-star {
+
+    font-size: .75rem;
+
+}
+/* ===========================
+    CONCERT SIDEBAR
+=========================== */
+
+.concert-sidebar{
+
+    position: sticky;
+
+    top: 100px;
+
+    max-height: calc(100vh - 120px);
+
+    overflow-y: auto;
 
 }

@@ -1,6 +1,9 @@
 <?php require __DIR__ . '/../Layout/header.php'; ?>
 <?php require __DIR__ . '/../Layout/sidebar.php'; ?>
 <?php require __DIR__ . '/../Layout/navbar.php'; ?>
+<?php /** @var array $concert */ ?>
+<?php /** @var array $gallery */ ?>
+<?php /** @var array $otherConcerts*/ ?>
 
 <?php
 
@@ -558,3 +561,133 @@ $halfStar = ($rating - $fullStars) >= 0.5;
                 </div>
 
             </div>
+            <div class="col-lg-4">
+
+                <div class="dashboard-card concert-sidebar">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+
+                            <h4 class="mb-0">
+
+                                <i class="bi bi-music-note-list"></i>
+
+                                More from this Event
+
+                            </h4>
+
+                            <span class="badge bg-secondary">
+
+                                <?= count($otherConcerts) ?>
+
+                            </span>
+
+                        </div>
+
+                        <?php if (empty($otherConcerts)): ?>
+
+                            <p class="text-muted mb-0">
+
+                                No other concerts.
+
+                            </p>
+
+                        <?php else: ?>
+
+                            <?php foreach ($otherConcerts as $other): ?>
+
+                                <?php
+
+                                $rating = (float)$other["AverageRating"];
+
+                                $full = floor($rating);
+
+                                $half = ($rating - $full) >= 0.5;
+
+                                ?>
+
+                                <a
+
+                                    href="?controller=concert&action=profile&id=<?= $other["idConcert"] ?>"
+
+                                    class="other-concert">
+
+                                    <img
+
+                                        src="<?= htmlspecialchars($other["BandProfileImage"]) ?>"
+
+                                        class="other-concert-image">
+
+                                    <div class="other-concert-info">
+
+                                        <h6>
+
+                                            <?= htmlspecialchars($other["BandName"]) ?>
+
+                                        </h6>
+
+                                        <small>
+
+                                            <i class="bi bi-clock"></i>
+
+                                            <?= date(
+                                                "H:i",
+                                                strtotime($other["StartDateTime"])
+                                            ) ?>
+
+                                            •
+
+                                            <?= htmlspecialchars($other["Stage"]) ?>
+
+                                        </small>
+
+                                        <div class="mt-1">
+
+                                            <?php
+
+                                            for ($i = 1; $i <= 5; $i++) {
+
+                                                if ($i <= $full) {
+
+                                                    echo '<i class="bi bi-star-fill text-warning"></i>';
+                                                } elseif ($half) {
+
+                                                    echo '<i class="bi bi-star-half text-warning"></i>';
+
+                                                    $half = false;
+                                                } else {
+
+                                                    echo '<i class="bi bi-star text-warning"></i>';
+                                                }
+                                            }
+
+                                            ?>
+
+                                            <span class="small text-muted">
+
+                                                <?= number_format($rating, 1) ?>
+
+                                                (<?= $other["ReviewCount"] ?>)
+
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </a>
+
+                            <?php endforeach; ?>
+
+                        <?php endif; ?>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<?php require __DIR__ . '/../Layout/scripts.php'; ?>

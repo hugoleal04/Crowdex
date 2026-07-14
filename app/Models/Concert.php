@@ -101,6 +101,47 @@ class Concert
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    public function getOtherConcertsFromEvent(int $idEvent, int $currentConcert): array
+    {
+        $stmt = $this->pdo->prepare("
+        SELECT
+            c.idConcert,
+            c.Stage,
+            c.StartDateTime,
+
+            b.idBand,
+            b.Name AS BandName,
+            b.ProfileImage AS BandProfileImage,
+
+            COALESCE(ROUND(AVG(r.Rating), 1), 0) AS AverageRating,
+            COUNT(r.idReview) AS ReviewCount
+
+        FROM Concert c
+
+        INNER JOIN Band b
+            ON c.Band_idBand = b.idBand
+
+        LEFT JOIN Review r
+            ON c.idConcert = r.Concert_idConcert
+
+        WHERE c.Event_idEvent = ?
+          AND c.idConcert <> ?
+
+        GROUP BY
+            c.idConcert,
+            c.Stage,
+            c.StartDateTime,
+            b.idBand,
+            b.Name,
+            b.ProfileImage
+
+        ORDER BY c.StartDateTime ASC
+    ");
+
+        $stmt->execute([$idEvent, $currentConcert]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function getConcertGallery(int $idConcert): array
     {
         $stmt = $this->pdo->prepare("

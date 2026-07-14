@@ -1044,3 +1044,108 @@ a {
     user-select: none;
 
 }
+
+/* ===========================
+    OTHER CONCERTS
+=========================== */
+
+.other-concert {
+
+    display: flex;
+
+    gap: 16px;
+
+    align-items: center;
+
+    padding: 14px;
+
+    margin-bottom: 14px;
+
+    border-radius: 18px;
+
+    transition: .2s;
+
+    color: inherit;
+
+    border: 2px solid transparent;
+
+}
+
+.other-concert:last-child {
+
+    margin-bottom: 0;
+
+}
+
+.other-concert:hover {
+
+    background: #fafafa;
+
+    border-color: var(--primary);
+
+    transform: translateX(5px);
+
+}
+
+.other-concert-image {
+
+    width: 70px;
+
+    height: 70px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 3px solid var(--primary);
+
+    flex-shrink: 0;
+
+}
+
+.other-concert-info {
+
+    flex: 1;
+
+}
+
+.other-concert-info h6 {
+
+    margin-bottom: 6px;
+
+    font-weight: 700;
+
+    color: var(--dark);
+
+}
+
+.other-concert-info small {
+
+    color: #666;
+
+    display: block;
+
+}
+
+.other-concert .bi-star-fill,
+.other-concert .bi-star-half,
+.other-concert .bi-star {
+
+    font-size: .75rem;
+
+}
+/* ===========================
+    CONCERT SIDEBAR
+=========================== */
+
+.concert-sidebar{
+
+    position: sticky;
+
+    top: 100px;
+
+    max-height: calc(100vh - 120px);
+
+    overflow-y: auto;
+
+}

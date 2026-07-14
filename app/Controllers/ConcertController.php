@@ -76,6 +76,12 @@ class ConcertController
         $reviews = $this->reviewModel->getReviewsByConcert($idConcert);
         $notifications = $this->notificationModel
             ->getNotifications($_SESSION["user_id"]);
+        $otherConcerts =
+            $this->ConcertModel
+            ->getOtherConcertsFromEvent(
+                $concert["idEvent"],
+                $concert["idConcert"]
+            );
         require __DIR__ . "/../Views/Concert/profile.php";
     }
 }

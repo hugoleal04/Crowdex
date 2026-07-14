@@ -248,77 +248,120 @@ class Review
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getReviewById(int $idReview): array|false
+    public function getReviewById(int $idReview, int $idUser): array|false
     {
         $sql = "
-            SELECT
-                r.idReview,
-                r.Rating,
-                r.Text,
-                r.CreatedAt,
-                r.Likes,
-                u.idUser,
-                u.Username,
-                u.Name,
-                u.PFP,
-                c.idConcert,
-                c.Stage,
-                c.StartDateTime,
-                c.EndDateTime,
-                b.idBand,
-                b.Name AS BandName,
-                b.ProfileImage AS BandProfileImage,
-                b.CoverImage AS BandCoverImage,
-                e.idEvent,
-                e.Title AS EventTitle,
-                e.BannerImage,
-                e.Description AS EventDescription,
-                v.Name AS VenueName,
-                ci.Name AS CityName,
-                co.Name AS CountryName,
-                COALESCE(ROUND(AVG(r2.Rating), 1), 0) AS AverageRating,
-                COUNT(DISTINCT r2.idReview) AS ReviewCount
-            FROM Review r
-            INNER JOIN User u ON r.User_idUser = u.idUser
-            INNER JOIN Concert c ON r.Concert_idConcert = c.idConcert
-            INNER JOIN Band b ON c.Band_idBand = b.idBand
-            INNER JOIN Event e ON c.Event_idEvent = e.idEvent
-            INNER JOIN Venue v ON e.Venue_idVenue = v.idVenue
-            INNER JOIN City ci ON v.City_idCity = ci.idCity
-            INNER JOIN Country co ON ci.Country_idCountry = co.idCountry
-            LEFT JOIN Review r2 ON r2.Concert_idConcert = c.idConcert
-            WHERE r.idReview = ?
-            GROUP BY
-                r.idReview,
-                r.Rating,
-                r.Text,
-                r.CreatedAt,
-                r.Likes,
-                u.idUser,
-                u.Username,
-                u.Name,
-                u.PFP,
-                c.idConcert,
-                c.Stage,
-                c.StartDateTime,
-                c.EndDateTime,
-                b.idBand,
-                b.Name,
-                b.ProfileImage,
-                b.CoverImage,
-                e.idEvent,
-                e.Title,
-                e.BannerImage,
-                e.Description,
-                v.Name,
-                ci.Name,
-                co.Name
-        ";
+        SELECT
+            r.idReview,
+            r.Rating,
+            r.Text,
+            r.CreatedAt,
+            u.idUser,
+            u.Username,
+            u.Name,
+            u.PFP,
+            c.idConcert,
+            c.Stage,
+            c.StartDateTime,
+            c.EndDateTime,
+            b.idBand,
+            b.Name AS BandName,
+            b.ProfileImage AS BandProfileImage,
+            b.CoverImage AS BandCoverImage,
+            e.idEvent,
+            e.Title AS EventTitle,
+            e.BannerImage,
+            e.Description AS EventDescription,
+            v.Name AS VenueName,
+            ci.Name AS CityName,
+            co.Name AS CountryName,
+            COALESCE(ROUND(AVG(r2.Rating), 1), 0) AS AverageRating,
+            COUNT(DISTINCT r2.idReview) AS ReviewCount,
+            COUNT(DISTINCT rl.User_idUser) AS Likes,
+            CASE
+                WHEN myLike.User_idUser IS NULL THEN 0
+                ELSE 1
+            END AS LikedByUser
+        FROM Review r
+        INNER JOIN User u ON r.User_idUser = u.idUser
+        INNER JOIN Concert c ON r.Concert_idConcert = c.idConcert
+        INNER JOIN Band b ON c.Band_idBand = b.idBand
+        INNER JOIN Event e ON c.Event_idEvent = e.idEvent
+        INNER JOIN Venue v ON e.Venue_idVenue = v.idVenue
+        INNER JOIN City ci ON v.City_idCity = ci.idCity
+        INNER JOIN Country co ON ci.Country_idCountry = co.idCountry
+        LEFT JOIN Review r2 ON r2.Concert_idConcert = c.idConcert
+        LEFT JOIN ReviewLike rl ON rl.Review_idReview = r.idReview
+        LEFT JOIN ReviewLike myLike
+            ON myLike.Review_idReview = r.idReview
+            AND myLike.User_idUser = ?
+        WHERE r.idReview = ?
+        GROUP BY
+            r.idReview,
+            r.Rating,
+            r.Text,
+            r.CreatedAt,
+            u.idUser,
+            u.Username,
+            u.Name,
+            u.PFP,
+            c.idConcert,
+            c.Stage,
+            c.StartDateTime,
+            c.EndDateTime,
+            b.idBand,
+            b.Name,
+            b.ProfileImage,
+            b.CoverImage,
+            e.idEvent,
+            e.Title,
+            e.BannerImage,
+            e.Description,
+            v.Name,
+            ci.Name,
+            co.Name,
+            myLike.User_idUser
+    ";
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$idReview]);
+        $stmt->execute([$idUser, $idReview]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public function toggleLike(int $idReview, int $idUser): bool
+    {
+        // Check if like exists
+        $stmt = $this->pdo->prepare("
+        SELECT 1
+        FROM ReviewLike
+        WHERE Review_idReview = ?
+          AND User_idUser = ?
+    ");
+
+        $stmt->execute([$idReview, $idUser]);
+
+        if ($stmt->fetch()) {
+            // Remove like
+            $stmt = $this->pdo->prepare("
+            DELETE FROM ReviewLike
+            WHERE Review_idReview = ?
+              AND User_idUser = ?
+        ");
+
+            $stmt->execute([$idReview, $idUser]);
+
+            return false;
+        }
+
+        // Add like
+        $stmt = $this->pdo->prepare("
+        INSERT INTO ReviewLike (Review_idReview, User_idUser)
+        VALUES (?, ?)
+    ");
+
+        $stmt->execute([$idReview, $idUser]);
+
+        return true;
     }
 
     public function getReviewByUserAndConcert(int $idUser, int $idConcert): array|false

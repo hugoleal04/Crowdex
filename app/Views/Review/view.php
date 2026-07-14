@@ -1,6 +1,7 @@
 <?php require __DIR__ . '/../Layout/header.php'; ?>
 <?php require __DIR__ . '/../Layout/sidebar.php'; ?>
 <?php require __DIR__ . '/../Layout/navbar.php'; ?>
+<?php /** @var array $review */ ?>
 
 <?php
 $rating = (float)$review["AverageRating"];
@@ -13,12 +14,11 @@ $halfStar = ($rating - $fullStars) >= 0.5;
         <!-- HERO -->
         <div class="dashboard-card overflow-hidden p-0 mb-5">
             <div class="position-relative">
-                <img 
-                    src="<?= htmlspecialchars($review["BandCoverImage"]) ?>" 
-                    class="w-100" 
+                <img
+                    src="<?= htmlspecialchars($review["BandCoverImage"]) ?>"
+                    class="w-100"
                     style="height:320px; object-fit:cover;"
-                    alt="Band Cover"
-                >
+                    alt="Band Cover">
                 <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(to top, rgba(0,0,0,.75), rgba(0,0,0,.15));"></div>
                 <div class="position-absolute bottom-0 start-0 w-100 p-4">
                     <div class="d-flex align-items-end">
@@ -26,8 +26,7 @@ $halfStar = ($rating - $fullStars) >= 0.5;
                             src="<?= htmlspecialchars($review["BandProfileImage"]) ?>"
                             class="rounded-circle border border-4 border-white me-4"
                             style="width:130px; height:130px; object-fit:cover;"
-                            alt="Band Profile"
-                        >
+                            alt="Band Profile">
                         <div class="text-white flex-grow-1">
                             <h1 class="fw-bold mb-2"><?= htmlspecialchars($review["BandName"]) ?></h1>
                             <div class="mb-2">
@@ -41,7 +40,7 @@ $halfStar = ($rating - $fullStars) >= 0.5;
                                         <i class="bi bi-star text-warning"></i>
                                     <?php endif; ?>
                                 <?php endfor; ?>
-                                <span class="ms-2 fw-semibold"><?= number_format($rating,1) ?></span>
+                                <span class="ms-2 fw-semibold"><?= number_format($rating, 1) ?></span>
                                 <span class="text-light">(<?= $review["ReviewCount"] ?> Reviews)</span>
                             </div>
                             <div class="small">
@@ -71,8 +70,7 @@ $halfStar = ($rating - $fullStars) >= 0.5;
                             src="<?= htmlspecialchars($review["PFP"]) ?>"
                             class="rounded-circle me-3"
                             style="width:75px; height:75px; object-fit:cover;"
-                            alt="User Profile"
-                        >
+                            alt="User Profile">
                     </a>
                     <div class="flex-grow-1">
                         <a href="?controller=user&action=profile&id=<?= $review["idUser"] ?>" class="text-decoration-none text-dark fw-bold fs-4">
@@ -97,12 +95,21 @@ $halfStar = ($rating - $fullStars) >= 0.5;
                             <i class="bi bi-star fs-4 text-warning"></i>
                         <?php endif; ?>
                     <?php endfor; ?>
-                    <span class="ms-2 fs-5 fw-semibold"><?= number_format($review["Rating"],1) ?></span>
+                    <span class="ms-2 fs-5 fw-semibold"><?= number_format($review["Rating"], 1) ?></span>
                 </div>
                 <div class="review-content"><?= nl2br(htmlspecialchars($review["Text"])) ?></div>
                 <hr class="my-4">
-                <div class="text-muted">
-                    <i class="bi bi-hand-thumbs-up"></i> <?= (int)$review["Likes"] ?> Likes
+                <div
+                    id="likeButton"
+                    class="d-inline-flex align-items-center gap-2"
+                    data-review="<?= $review['idReview'] ?>"
+                    style="cursor:pointer;">
+                    <i
+                        id="likeIcon"
+                        class="bi <?= $review['LikedByUser'] ? 'bi-hand-thumbs-up-fill text-primary' : 'bi-hand-thumbs-up' ?>"></i>
+
+                    <span id="likeCount"><?= (int)$review['Likes'] ?></span>
+                    Likes
                 </div>
             </div>
         </div>
@@ -149,31 +156,55 @@ $halfStar = ($rating - $fullStars) >= 0.5;
 <?php require __DIR__ . '/../Layout/scripts.php'; ?>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const modal = new bootstrap.Modal(document.getElementById("galleryModal"));
-    const body = document.getElementById("galleryModalBody");
+    document.addEventListener("DOMContentLoaded", () => {
+        const modal = new bootstrap.Modal(document.getElementById("galleryModal"));
+        const body = document.getElementById("galleryModalBody");
 
-    document.querySelectorAll(".gallery-image, .gallery-video").forEach(item => {
-        item.addEventListener("click", () => {
-            body.innerHTML = "";
-            if (item.dataset.type === "image") {
-                const img = document.createElement("img");
-                img.src = item.dataset.src;
-                img.style.maxWidth = "95%";
-                img.style.maxHeight = "95vh";
-                img.style.objectFit = "contain";
-                body.appendChild(img);
-            } else {
-                const video = document.createElement("video");
-                video.src = item.dataset.src;
-                video.controls = true;
-                video.autoplay = true;
-                video.style.maxWidth = "95%";
-                video.style.maxHeight = "95vh";
-                body.appendChild(video);
-            }
-            modal.show();
+        document.querySelectorAll(".gallery-image, .gallery-video").forEach(item => {
+            item.addEventListener("click", () => {
+                body.innerHTML = "";
+                if (item.dataset.type === "image") {
+                    const img = document.createElement("img");
+                    img.src = item.dataset.src;
+                    img.style.maxWidth = "95%";
+                    img.style.maxHeight = "95vh";
+                    img.style.objectFit = "contain";
+                    body.appendChild(img);
+                } else {
+                    const video = document.createElement("video");
+                    video.src = item.dataset.src;
+                    video.controls = true;
+                    video.autoplay = true;
+                    video.style.maxWidth = "95%";
+                    video.style.maxHeight = "95vh";
+                    body.appendChild(video);
+                }
+                modal.show();
+            });
         });
+        const likeButton = document.getElementById('likeButton');
+
+        if (likeButton) {
+            likeButton.addEventListener('click', async () => {
+                const response = await fetch(
+                    '?controller=review&action=toggleLike', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: `idReview=${likeButton.dataset.review}`
+                    }
+                );
+
+                const data = await response.json();
+                const likeCount = document.getElementById('likeCount');
+                const icon = document.getElementById('likeIcon');
+
+                likeCount.textContent = data.likes;
+                icon.className = data.liked ?
+                    'bi bi-hand-thumbs-up-fill text-primary' :
+                    'bi bi-hand-thumbs-up';
+            });
+        }
     });
-});
 </script>

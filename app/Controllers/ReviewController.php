@@ -102,9 +102,27 @@ class ReviewController
 
         require __DIR__ . '/../Views/User/review.php';
     }
+    public function toggleLike(): void
+    {
+        $idReview = (int)$_POST['idReview'];
+        $liked = $this->reviewModel->toggleLike($idReview, $_SESSION['user_id']);
+        $review = $this->reviewModel->getReviewById($idReview, $_SESSION['user_id']);
+
+        header('Content-Type: application/json');
+        echo json_encode([
+            'liked' => $liked,
+            'likes' => (int)$review['Likes']
+        ]);
+
+        exit;
+    }
 
     public function view(): void
     {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: ?controller=user&action=login');
+            exit;
+        }
         $idReview = (int)($_GET['id'] ?? 0);
 
         if ($idReview <= 0) {
@@ -113,7 +131,7 @@ class ReviewController
             exit;
         }
 
-        $review = $this->reviewModel->getReviewById($idReview);
+        $review = $this->reviewModel->getReviewById($idReview, $_SESSION["user_id"]);
 
         if ($review === false) {
             http_response_code(404);

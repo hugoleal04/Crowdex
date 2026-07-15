@@ -182,4 +182,47 @@ class User
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function hasUserCreatedGroup(int $idUser, int $idEvent): bool
+    {
+        $stmt = $this->pdo->prepare("
+        SELECT 1
+        FROM `Group`
+        WHERE User_idUser_Owner = ?
+          AND Event_idEvent = ?
+        LIMIT 1
+    ");
+
+        $stmt->execute([$idUser, $idEvent]);
+
+        return (bool) $stmt->fetchColumn();
+    }
+    public function getUserOwnedGroup(int $idUser, int $idEvent): array|false
+    {
+        $stmt = $this->pdo->prepare("
+        SELECT *
+        FROM `Group`
+        WHERE User_idUser_Owner = ?
+          AND Event_idEvent = ?
+        LIMIT 1
+    ");
+
+        $stmt->execute([$idUser, $idEvent]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public function isUserInGroup(int $idGroup, int $idUser): bool
+    {
+        $stmt = $this->pdo->prepare("
+            SELECT 1
+            FROM Group_has_User
+            WHERE Group_idGroup = ?
+            AND User_idUser = ?
+            LIMIT 1
+        ");
+
+        $stmt->execute([$idGroup, $idUser]);
+
+        return (bool) $stmt->fetchColumn();
+    }
 }

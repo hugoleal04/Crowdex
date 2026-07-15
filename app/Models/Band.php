@@ -12,6 +12,25 @@ class Band
     {
         $this->pdo = $pdo;
     }
+    public function getTrendingBands(): array
+    {
+        $stmt = $this->pdo->prepare("
+        SELECT
+            b.idBand,
+            b.Name,
+            COUNT(r.idReview) AS TotalReviews
+        FROM Band b
+        INNER JOIN Concert c ON c.Band_idBand = b.idBand
+        INNER JOIN Review r ON r.Concert_idConcert = c.idConcert
+        GROUP BY b.idBand, b.Name
+        ORDER BY TotalReviews DESC, b.Name ASC
+        LIMIT 10
+    ");
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function getBandsBySimilarName(string $similarName): array
     {

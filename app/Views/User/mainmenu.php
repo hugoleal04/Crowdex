@@ -4,6 +4,7 @@
 
 <?php /** @var array $reviews */ ?>
 <?php /** @var array $upcomingConcerts */ ?>
+<?php /** @var array $trendingBands */?>
 
 <div class="main-content" id="mainContent">
     <!-- UPCOMING CONCERTS -->
@@ -99,12 +100,14 @@
         </div>
 
         <div class="artists">
-            <span class="artist-pill">Coldplay</span>
-            <span class="artist-pill">Sleep Token</span>
-            <span class="artist-pill">Linkin Park</span>
-            <span class="artist-pill">BMTH</span>
-            <span class="artist-pill">Ghost</span>
-            <span class="artist-pill">Architects</span>
+            <?php foreach ($trendingBands as $band): ?>
+                <a
+                    href="?controller=band&action=profile&id=<?= $band['idBand'] ?>"
+                    class="artist-pill text-decoration-none">
+                    <?= htmlspecialchars($band['Name']) ?>
+                    <span class="ms-1 text-muted">(<?= $band['TotalReviews'] ?>)</span>
+                </a>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>

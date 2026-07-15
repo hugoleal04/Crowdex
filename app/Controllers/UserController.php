@@ -230,7 +230,7 @@ class UserController
             header('Location: ?controller=user&action=login');
             exit;
         }
-
+        $trendingBands = $this->bandModel->getTrendingBands();
         $notifications = $this->loadNotifications();
         $upcomingConcerts = $this->concertModel->getUpcomingConcertsByUserCountry($_SESSION['user_id']);
         $reviews = $this->reviewModel->getReviewsFromFollowing($_SESSION['user_id']);

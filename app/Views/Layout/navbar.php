@@ -7,7 +7,7 @@
 
     <div class="navbar-left">
 
-<!--         <button
+        <!--         <button
             id="sidebarToggle"
             class="sidebar-toggle">
 
@@ -141,12 +141,32 @@
 
         </div>
 
-        <button class="icon-button">
+        <!--         <button
+            class="icon-button"
+            id="groupsButton">
 
             <i class="bi bi-chat-left-text-fill"></i>
 
-        </button>
+        </button> -->
+        <div class="dropdown">
 
+            <button
+                class="icon-button"
+                id="groupsButton"
+                data-bs-toggle="dropdown">
+
+                <i class="bi bi-chat-left-text-fill"></i>
+
+            </button>
+
+            <ul
+                id="groupsDropdown"
+                class="dropdown-menu dropdown-menu-end"
+                style="min-width:350px;max-height:500px;overflow-y:auto;">
+
+            </ul>
+
+        </div>
         <div class="dropdown">
 
             <button
@@ -224,7 +244,12 @@
         </div>
 
     </div>
+    <!--     <div
+        id="groupsDropdown"
+        class="dropdown-menu dropdown-menu-end p-0"
+        style="width:350px;max-height:500px;overflow-y:auto;display:none;">
 
+    </div> -->
 </nav>
 <script>
     document.querySelectorAll(".delete-notification").forEach(button => {
@@ -282,4 +307,50 @@
         });
 
     });
+    const groupsButton = document.getElementById('groupsButton');
+    const groupsDropdown = document.getElementById('groupsDropdown');
+
+    groupsButton.addEventListener('click', async () => {
+        if (groupsDropdown.style.display === 'block') {
+            groupsDropdown.style.display = 'none';
+            return;
+        }
+
+        try {
+            const response = await fetch('?controller=group&action=myGroups');
+            const groups = await response.json();
+            console.log(groups);
+            groupsDropdown.innerHTML = '';
+
+            if (groups.length === 0) {
+                groupsDropdown.innerHTML = `
+                <div class="p-4 text-center text-muted">
+                    You're not in any groups.
+                </div>
+            `;
+            } else {
+                groups.forEach(group => {
+                    groupsDropdown.innerHTML += `
+                    <a href="?controller=group&action=chat&id=${group.idGroup}" class="dropdown-item p-3">
+                        <div class="fw-bold">${group.GroupName}</div>
+                        <small class="text-muted">${group.EventTitle}</small>
+                        <br>
+                        <small>${group.CurrentMembers}/${group.MaxMembers} Members</small>
+                    </a>
+                `;
+                });
+            }
+
+            
+        } catch (error) {
+            console.error('Error loading groups:', error);
+            groupsDropdown.innerHTML = `
+            <div class="p-4 text-center text-danger">
+                Failed to load groups. Please try again.
+            </div>
+        `;
+            
+        }
+    });
+
 </script>

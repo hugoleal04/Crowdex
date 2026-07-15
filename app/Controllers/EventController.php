@@ -37,9 +37,13 @@ class EventController
     {
         return $this->notificationModel->getNotifications($_SESSION['user_id']);
     }
-    
+
     public function profile(): void
     {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: ?controller=user&action=login');
+            exit;
+        }
         if (!isset($_GET["id"])) {
             header("Location: ?controller=user&action=menu");
             exit;

@@ -126,7 +126,7 @@
                             </span>
                         </div>
 
-                        <a href="#" class="event-link">
+                        <a href="?controller=event&action=profile&id=<?=$event['idEvent']?>" class="event-link">
                             View event <i class="bi bi-arrow-right"></i>
                         </a>
                     </div>

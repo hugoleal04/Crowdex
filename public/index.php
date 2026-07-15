@@ -10,9 +10,12 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Dotenv\Dotenv;
 use App\Controllers\UserController;
+use App\Controllers\EventController;
 use App\Controllers\ReviewController;
 use App\Controllers\ConcertController;
 use App\Controllers\BandController;
+use App\Controllers\GroupController;
+
 use App\Models\User;
 
 $dotenv = Dotenv::createImmutable(__DIR__ . "/..");
@@ -42,11 +45,15 @@ switch ($controllerName) {
     case "user":
         $controller = new UserController($pdo);
         break;
-
+    case "event":
+        $controller = new EventController($pdo);
+        break;
     case "review":
         $controller = new ReviewController($pdo);
         break;
-
+    case "group":
+        $controller = new GroupController($pdo);
+        break;
     case "concert":
         $controller = new ConcertController($pdo);
         break;

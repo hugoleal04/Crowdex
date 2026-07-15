@@ -225,4 +225,5 @@ class User
 
         return (bool) $stmt->fetchColumn();
     }
+    
 }

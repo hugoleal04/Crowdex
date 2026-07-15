@@ -7,13 +7,13 @@
 
     <div class="navbar-left">
 
-        <button
+<!--         <button
             id="sidebarToggle"
             class="sidebar-toggle">
 
             <i class="bi bi-list"></i>
 
-        </button>
+        </button> -->
 
         <a
             href="?controller=user&action=menu"
